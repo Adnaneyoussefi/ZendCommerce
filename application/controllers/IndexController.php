@@ -10,20 +10,19 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $categorie = new Application_Model_Categorie();
-        var_dump($categorie->getListCategories());
-        $this->view->info = $categorie->getListCategories();
+        //$categorie = new Application_Model_Categorie();
+        //$this->view->info = $categorie->updateCategorie(4,"labass");
     }
 
     public function afficherAction()
+    {
+    }
+
+    public function categorieAction()
     {
         // action body
     }
 
 
 }
-
-
-
-
 

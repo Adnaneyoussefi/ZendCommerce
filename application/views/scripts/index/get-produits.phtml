@@ -1,0 +1,27 @@
+<div class="container">
+<a href="<?=$this->url(array('action'=>'countries'))?>" class="btn btn-primary">Ajouter</a>
+<table class="table table-hover">
+  	<thead>
+		<tr>
+			<th scope="col">id</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Description</th>
+			<th scope="col">Prix</th>
+			<th scope="col">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach($this->produits as $p) {
+	 ?>
+		<tr class="table-active">
+			<th scope="row"><?=$p->id?></th>
+			<td><?=$p->nom?></td>
+			<td><?=$p->description?></td>
+			<td><?=$p->prix?></td>
+			<td><button class="btn btn-danger">Supprimer</button>
+			<button class="btn btn-warning">Modifier</button></td>
+		</tr>
+		<?php } ?>
+	</tbody>
+</table>
+</div>			

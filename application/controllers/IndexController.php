@@ -20,8 +20,17 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
+    public function getProduitsAction()
+    {
+        $produit = new Application_Model_Produit();
+        var_dump($produit->getListProduits());
+        $this->view->produits = $produit->getListProduits();
+    }
+
 
 }
+
+
 
 
 

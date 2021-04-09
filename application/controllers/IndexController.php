@@ -10,14 +10,10 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $categorie = new Application_Model_Categorie();
-        var_dump($categorie->getListCategories());
-        $this->view->info = $categorie->getListCategories();
     }
 
     public function afficherAction()
     {
-        // action body
     }
 
     public function getProduitsAction()
@@ -27,12 +23,12 @@ class IndexController extends Zend_Controller_Action
         $this->view->produits = $produit->getListProduits();
     }
 
-
+    public function categorieAction()
+    {
+         $categorie = new Application_Model_Categorie();
+         $this->view->info = $categorie->getListCategories();
+    }
 }
-
-
-
-
 
 
 

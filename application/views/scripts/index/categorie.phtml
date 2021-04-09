@@ -1,0 +1,29 @@
+<h1>Categories</h1>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+
+	<th scope="col">Id</th>
+	<th scope="col">Categorie</th>
+	<th scope="col">Modifier</th>
+	<th scope="col">Supprimer</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  <?php
+  foreach ($this->info as $cat) :
+    echo "<tr>";
+    echo  "<th scope='row'>$cat->id</th>";
+    echo  "<td>$cat->nom</td>";
+	echo  "<td><a href='?id=$cat->id' ><button type='button' class='btn btn-success'>Modifier</button></a></td>";
+	echo  "<td><a href='?id=$cat->id' ><button type='button' class='btn btn-danger'>Supprimer</button></a></td>";
+    echo "</tr>";
+ endforeach;
+
+
+	?>
+  </tbody>
+</table>

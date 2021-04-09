@@ -40,8 +40,6 @@ class Application_Model_Categorie
     public function addProduits($produits)
     {
         $this->produits[] = $produits;
-        //array_push($this->countries, $countrie);
-
         return $this;
     }
 
@@ -56,5 +54,31 @@ class Application_Model_Categorie
         $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
         return $client->getCategorieById($id);
     }
+
+
+    public function deleteCategorie($id)
+    {
+        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+        return $client->deleteCategorie($id);
+    }
+
+    public function addNewCategorie($nom)
+    {
+        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+        return $client->addNewCategorie($nom);
+    }
+
+    public function updateCategorie($id,$nom)
+    {
+        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+        return $client->updateCategorie($id,$nom);
+    }
+
+    /*public function getProduit()
+    {
+        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+        return $client->getListProduits();
+    }*/
+
 }
 

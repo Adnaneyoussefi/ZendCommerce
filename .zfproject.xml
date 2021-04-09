@@ -12,6 +12,7 @@
           <actionMethod actionName="test"/>
           <actionMethod actionName="afficher"/>
           <actionMethod actionName="getProduits"/>
+          <actionMethod actionName="categorie"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Test">
@@ -57,6 +58,8 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="getProduits"/>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="categorie"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

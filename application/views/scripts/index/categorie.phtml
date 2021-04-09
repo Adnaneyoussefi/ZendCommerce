@@ -15,6 +15,7 @@
   <tbody>
   <?php
   foreach ($this->info as $cat) :
+	echo "<tr>";
     echo "<tr>";
     echo  "<th scope='row'>$cat->id</th>";
     echo  "<td>$cat->nom</td>";
@@ -26,8 +27,8 @@
 
 
  if(isset( $_GET['idS'] )){
- $categorie = new Application_Model_Categorie();
-$categorie->deleteCategorie($_GET['idS']);
+ 	$categorie = new Application_Model_Categorie();
+	$categorie->deleteCategorie($_GET['idS']);
 
  }
 	?>

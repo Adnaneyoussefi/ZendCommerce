@@ -28,6 +28,16 @@ class IndexController extends Zend_Controller_Action
         $categorie = new Application_Model_Categorie();
         $this->view->info = $categorie->getListCategories();
     }
-}
+
+    public function salamAction()
+    {
+        // action body
+    }
+
 
 }
+
+
+
+
+

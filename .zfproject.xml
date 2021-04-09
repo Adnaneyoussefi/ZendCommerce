@@ -11,9 +11,12 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="test"/>
           <actionMethod actionName="afficher"/>
-          <actionMethod actionName="getProduits"/>
           <actionMethod actionName="categorie"/>
-          <actionMethod actionName="hello"/>
+          <actionMethod actionName="jkhjk"/>
+          <actionMethod actionName="sdd"/>
+          <actionMethod actionName="jhkl"/>
+          <actionMethod actionName="hey"/>
+          <actionMethod actionName="salam"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Test">
@@ -27,7 +30,6 @@
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
         <modelFile modelName="Categorie"/>
-        <modelFile modelName="Produit"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
@@ -51,19 +53,23 @@
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="afficher"/>
           </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Produit">
-            <viewScriptFile forActionName="index"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Produit">
-            <viewScriptFile forActionName="produit"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Index">
-            <viewScriptFile forActionName="getProduits"/>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="categorie"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
-            <viewScriptFile forActionName="hello"/>
+            <viewScriptFile forActionName="jkhjk"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="sdd"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="jhkl"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="hey"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="salam"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
@@ -101,14 +107,9 @@
         <testApplicationControllerDirectory>
           <testApplicationControllerFile forControllerName="Index">
             <testApplicationActionMethod forActionName="afficher"/>
-            <testApplicationActionMethod forActionName="getProduits"/>
           </testApplicationControllerFile>
           <testApplicationControllerFile forControllerName="Afficher">
             <testApplicationActionMethod forActionName="index"/>
-          </testApplicationControllerFile>
-          <testApplicationControllerFile forControllerName="Produit">
-            <testApplicationActionMethod forActionName="index"/>
-            <testApplicationActionMethod forActionName="produit"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>

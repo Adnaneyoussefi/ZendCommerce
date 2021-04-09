@@ -74,5 +74,11 @@ class Application_Model_Categorie
         return $client->updateCategorie($id,$nom);
     }
 
+    /*public function getProduit()
+    {
+        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+        return $client->getListProduits();
+    }*/
+
 }
 

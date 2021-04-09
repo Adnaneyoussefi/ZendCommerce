@@ -10,8 +10,6 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        //$categorie = new Application_Model_Categorie();
-        //$this->view->info = $categorie->updateCategorie(4,"labass");
     }
 
     public function afficherAction()
@@ -20,7 +18,8 @@ class IndexController extends Zend_Controller_Action
 
     public function categorieAction()
     {
-        // action body
+         $categorie = new Application_Model_Categorie();
+         $this->view->info = $categorie->getListCategories();
     }
 
 

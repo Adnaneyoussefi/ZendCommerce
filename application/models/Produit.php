@@ -104,5 +104,11 @@ class Application_Model_Produit
         $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
         return $client->getProduitById($id);
     }
+
+    public function addNewProduit($nom, $description, $prix, $image, $quantite, $categorie_id)
+    {
+        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+        return $client->addNewProduit($nom, $description, $prix, $image, $quantite, $categorie_id);
+    }
 }
 

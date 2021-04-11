@@ -2,7 +2,8 @@
 <form method="post" action="categorie">
   <div class="form-group">
     <label for="exampleInputEmail1">Nom de la Categorie</label>
-    <input type="text" class="form-control" name="nom" aria-describedby="emailHelp" >
+    <input type="text" class="form-control" name="nom"  value="<?php if(isset($this->catModif)){ echo $this->catModif->nom; }?>">
+	<input type="hidden" class="form-control" name="id"  value="<?php if(isset($this->catModif)){ echo $this->catModif->id; }?>">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

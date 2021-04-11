@@ -1,14 +1,14 @@
+<div class="container">
 <h1>Categories</h1>
 <br>
-
+<a href="<?=$this->url(array('action'=>'afficher'))?>" ><button type='button' class='btn btn-primary'>Ajouter</button></a>
 <table class="table">
   <thead>
     <tr>
 
 	<th scope="col">Id</th>
 	<th scope="col">Categorie</th>
-	<th scope="col">Modifier</th>
-	<th scope="col">Supprimer</th>
+	<th scope="col" colspan="2">Actions</th>
 
     </tr>
   </thead>
@@ -19,7 +19,7 @@
     echo "<tr>";
     echo  "<th scope='row'>$cat->id</th>";
     echo  "<td>$cat->nom</td>";
-	echo  "<td><a href='?idM=$cat->id' ><button type='button' class='btn btn-success'>Modifier</button></a></td>";
+	echo  "<td><a href='?idM=$cat->id' ><button type='button' class='btn btn-warning'>Modifier</button></a></td>";
 	echo  "<td><a href='?idS=$cat->id' ><button type='button' class='btn btn-danger'>Supprimer</button></a></td>";
     echo "</tr>";
  endforeach;
@@ -29,8 +29,11 @@
  if(isset( $_GET['idS'] )){
  	$categorie = new Application_Model_Categorie();
 	$categorie->deleteCategorie($_GET['idS']);
-
+	header("Location: categorie");
  }
+
+
 	?>
   </tbody>
 </table>
+</div>

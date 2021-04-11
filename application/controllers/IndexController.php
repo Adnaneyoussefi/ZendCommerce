@@ -12,30 +12,29 @@ class IndexController extends Zend_Controller_Action
     {
     }
 
-    public function afficherAction()
-    {
-    }
-
-    public function getProduitsAction()
-    {
-        $produit = new Application_Model_Produit();
-        //var_dump($produit->getListProduits());
-        $this->view->produits = $produit->getListProduits();
-    }
-
     public function categorieAction()
     {
+        if(isset($_POST['nom'])){
+        $categorie = new Application_Model_Categorie();
+        $this->view->info = $categorie->addNewCategorie($_POST['nom']);
+        }
         $categorie = new Application_Model_Categorie();
         $this->view->info = $categorie->getListCategories();
     }
 
-    public function salamAction()
+    public function afficherAction()
+    {
+    }
+
+    public function modifierAction()
     {
         // action body
     }
 
 
 }
+
+
 
 
 

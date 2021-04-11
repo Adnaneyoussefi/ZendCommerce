@@ -17,6 +17,7 @@
           <actionMethod actionName="jhkl"/>
           <actionMethod actionName="hey"/>
           <actionMethod actionName="salam"/>
+          <actionMethod actionName="modifier"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Test">
@@ -70,6 +71,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="salam"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="modifier"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

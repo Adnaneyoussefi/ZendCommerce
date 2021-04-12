@@ -16,6 +16,12 @@ class Application_Model_Produit
 
     private $categorie;
 
+    private $client;
+
+    public function __construct() {
+        $this->client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+    }
+
     public function getId()
     {
         return $this->id;
@@ -95,20 +101,40 @@ class Application_Model_Produit
 
     public function getListProduits()
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->getListProduits();
+        $client = $this->client;
+        $produits = $this->client->getListProduits();
+        $categories = $this->client->getListCategories();
+        foreach($produits as $p) {
+            foreach($categories as $c) {
+                if($p->categorie->id === $c->id)
+                    $p->categorie = $c;
+            }
+        }
+        return $produits;
+    }
+
+    public function deleteProduit($id)
+    {
+        $client = $this->client;
+        return $this->client->deleteProduit($id);
     }
 
     public function getProduitById($id)
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->getProduitById($id);
+        $client = $this->client;
+        return $this->client->getProduitById($id);
     }
 
     public function addNewProduit($nom, $description, $prix, $image, $quantite, $categorie_id)
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+        $client = $this->client;
         return $client->addNewProduit($nom, $description, $prix, $image, $quantite, $categorie_id);
+    }
+
+    public function updateProduit($id, $nom, $description, $prix, $image, $quantite, $categorie_id)
+    {
+        $client = $this->client;
+        return $client->updateProduit($id, $nom, $description, $prix, $image, $quantite, $categorie_id);
     }
 }
 

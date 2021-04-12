@@ -3,24 +3,22 @@
 class IndexController extends Zend_Controller_Action
 {
 
+    private $r = null;
+
     public function init()
     {
-        /* Initialize action controller here */
+        $this->r = new Zend_Controller_Action_Helper_Redirector;
     }
 
     public function indexAction()
     {
     }
 
-    public function afficherAction()
-    {
-    }
-
     public function getProduitsAction()
     {
         $produit = new Application_Model_Produit();
-        //var_dump($produit->getListProduits());
         $this->view->produits = $produit->getListProduits();
+        $this->view->produit = "ffff";
     }
 
     public function categorieAction()
@@ -29,15 +27,51 @@ class IndexController extends Zend_Controller_Action
         $this->view->info = $categorie->getListCategories();
     }
 
-    public function salamAction()
+    public function addproduitAction()
     {
-        // action body
+        $categorie = new Application_Model_Categorie();
+        $produit = new Application_Model_Produit();
+        $this->view->categories = $categorie->getListCategories();
+        $this->view->action = "Ajouter";
+        if(isset($_GET['id'])){
+            $this->view->produit = $produit->getProduitById($_GET['id']);
+            $this->view->action = "Modifier";
+            if(isset($_POST['Modifier'])) {
+                $produit1 = new Application_Model_Produit();
+                $produit1->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
+                $_POST['quantite'], $_POST['categorie']);
+                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+            }
+        }
+        else{
+            if(isset($_POST['Ajouter'])) {
+                $produit->addNewProduit($_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
+                $_POST['quantite'], $_POST['categorie']);
+                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+            }
+        }
     }
 
+    public function deleteproduitAction()
+    {
+        $produit = new Application_Model_Produit();
+        if(isset($_GET['id'])){
+            $produit->deleteProduit($_GET['id']);
+            $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+        }
+    }
 
+    public function updateproduitAction()
+    {
+        $categorie = new Application_Model_Categorie();
+        $produit = new Application_Model_Produit();
+        $this->view->categories = $categorie->getListCategories();
+        if(isset($_GET['id'])){
+            if(isset($_POST['Modifier'])) {
+                $produit->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
+                $_POST['quantite'], $_POST['categorie']);
+                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+            }
+        }
+    }
 }
-
-
-
-
-

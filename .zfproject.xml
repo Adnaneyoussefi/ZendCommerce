@@ -17,10 +17,14 @@
           <actionMethod actionName="jhkl"/>
           <actionMethod actionName="hey"/>
           <actionMethod actionName="salam"/>
+<<<<<<< HEAD
           <actionMethod actionName="addproduit"/>
           <actionMethod actionName="deleteproduit"/>
           <actionMethod actionName="updateproduit"/>
           <actionMethod actionName="showproduit"/>
+=======
+          <actionMethod actionName="modifier"/>
+>>>>>>> 2734dee027c6f98d916788be12e2dcb5ac6fe1b8
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Test">
@@ -76,6 +80,7 @@
             <viewScriptFile forActionName="salam"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
+<<<<<<< HEAD
             <viewScriptFile forActionName="addproduit"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
@@ -86,6 +91,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="showproduit"/>
+=======
+            <viewScriptFile forActionName="modifier"/>
+>>>>>>> 2734dee027c6f98d916788be12e2dcb5ac6fe1b8
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

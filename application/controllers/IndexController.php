@@ -14,14 +14,23 @@ class IndexController extends Zend_Controller_Action
 
     public function categorieAction()
     {
-        if(isset($_POST['nom']) && isset($_POST['id'])){
-            $categorie = new Application_Model_Categorie();
-            $this->view->info = $categorie->updateCategorie($_POST['id'],$_POST['nom']);
-            }
-        else if(isset($_POST['nom'])){
+        if(isset($_POST['nom']) && empty($_POST['id'])){
             $categorie = new Application_Model_Categorie();
             $this->view->info = $categorie->addNewCategorie($_POST['nom']);
+
+            echo "<script>
+            $('#aj').show();
+            </script>";
+
+
             }
+        else if(isset($_POST['nom']) && isset($_POST['id'])){
+        $categorie = new Application_Model_Categorie();
+        $this->view->info = $categorie->updateCategorie($_POST['id'],$_POST['nom']);
+                echo "<script>
+        $('#mod').show();
+        </script>";
+        }
 
         $categorie = new Application_Model_Categorie();
         $this->view->info = $categorie->getListCategories();
@@ -30,22 +39,31 @@ class IndexController extends Zend_Controller_Action
     public function afficherAction()
     {
         if(isset( $_GET['idS'] )){
-            $categorie = new Application_Model_Categorie();
-           $categorie->deleteCategorie($_GET['idS']);
-           header("Location: categorie");
+            try{
+                $categorie = new Application_Model_Categorie();
+                $categorie->deleteCategorie($_GET['idS']);
+                header("Location: categorie");
+                echo "<script>
+                $('#supp').show();
+                </script>";
+            }catch(Exception $e){
+
+            }
+
+
         }
         else if(isset($_GET['idM'])){
 
-            $categorie = new Application_Model_Categorie();
-            $this->view->catModif = $categorie->getCategorieById($_GET['idM']);
+            try{
+                $categorie = new Application_Model_Categorie();
+                $this->view->catModif = $categorie->getCategorieById($_GET['idM']);
+            }catch(Exception $e){
+
+            }
+            
 
         }
     }
-
-    public function modifierAction()
-    {
-    }
-
 
 }
 

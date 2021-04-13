@@ -8,6 +8,10 @@ class Application_Model_Categorie
 
     private $produits = [];
 
+    public function __construct() {
+        $this->client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+    }
+
     public function getId()
     {
         return $this->id;
@@ -45,40 +49,32 @@ class Application_Model_Categorie
 
     public function getListCategories()
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->getListCategories();
+       
+        return $this->client->getListCategories();
     }
 
     public function getCategorieById($id)
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->getCategorieById($id);
+        
+        return $this->client->getCategorieById($id);
     }
 
 
     public function deleteCategorie($id)
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->deleteCategorie($id);
+        
+        return $this->client->deleteCategorie($id);
     }
 
     public function addNewCategorie($nom)
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->addNewCategorie($nom);
+        return $this->client->addNewCategorie($nom);
     }
 
     public function updateCategorie($id,$nom)
     {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->updateCategorie($id,$nom);
+        return $this->client->updateCategorie($id,$nom);
     }
-
-    /*public function getProduit()
-    {
-        $client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
-        return $client->getListProduits();
-    }*/
 
 }
 

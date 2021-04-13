@@ -55,29 +55,18 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
-    public function updateproduitAction()
-    {
-        $categorie = new Application_Model_Categorie();
-        $produit = new Application_Model_Produit();
-        $this->view->categories = $categorie->getListCategories();
-        if(isset($_GET['id'])){
-            if(isset($_POST['Modifier'])) {
-                $produit->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
-                $_POST['quantite'], $_POST['categorie']);
-                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-            }
-        }
-    }
-
     public function categorieAction()
     {
         if(isset($_POST['nom']) && empty($_POST['id'])){
+            try{
             $categorie = new Application_Model_Categorie();
             $this->view->info = $categorie->addNewCategorie($_POST['nom']);
-
+        }
+        catch(Exception $e){
             echo "<script>
             $('#aj').show();
             </script>";
+        }
 
 
             }
@@ -85,9 +74,10 @@ class IndexController extends Zend_Controller_Action
         $categorie = new Application_Model_Categorie();
         $this->view->info = $categorie->updateCategorie($_POST['id'],$_POST['nom']);
                 echo "<script>
-        $('#mod').show();
-        </script>";
+                $('#mod').show();
+                </script>";
         }
+
         $categorie = new Application_Model_Categorie();
         $this->view->info = $categorie->getListCategories();
     }

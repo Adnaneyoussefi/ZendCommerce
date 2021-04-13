@@ -1,7 +1,6 @@
 <div class="container">
 <h1>Categories</h1>
 <br>
-<a href="<?=$this->url(array('action'=>'afficher'))?>" ><button type='button' class='btn btn-primary'>Ajouter</button></a>
 
 <div class="alert alert-danger collapse" id="supp">
   Categorie a été supprimé
@@ -13,7 +12,7 @@
   Categorie a été modifié
 </div>
 
-<table class="table">
+<table class="table table-bordered">
   <thead>
     <tr>
 	<th scope="col">Id</th>
@@ -38,20 +37,7 @@
 	?>
   </tbody>
 </table>
-
-
-<?php
-/*
-        if(isset($_GET['idS'])){
-                echo "
-              <script>
-              $('#supp').show();
-              alert('hello');
-              </script>
-              ";
-        }
-*/
-?>
+<center><a href="<?=$this->url(array('action'=>'afficher'))?>" ><button type='button' class='btn btn-primary'>Ajouter</button></a>
 
 
 </div>

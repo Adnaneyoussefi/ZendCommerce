@@ -55,7 +55,7 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
-    public function categorieAction()
+public function categorieAction()
     {
 //supression de catégorie
         if (isset($_GET['idS'])) {
@@ -74,6 +74,7 @@ class IndexController extends Zend_Controller_Action
                 $this->view->info = $categorie->addNewCategorie($_POST['nom']);
                 echo "<script>$('#aj').show();</script>";
             } catch (Exception $e) {
+
             }
         }
         else if (isset($_POST['nom']) && isset($_POST['id'])) {
@@ -81,12 +82,14 @@ class IndexController extends Zend_Controller_Action
                 $this->view->info = $categorie->updateCategorie($_POST['id'], $_POST['nom']);
                 echo "<script>$('#mod').show();</script>";
         }
-//affichage listes catégorie
+//affichage listes des catégories
         $categorie = new Application_Model_Categorie();
+        $produit = new Application_Model_Produit();
         $this->view->info = $categorie->getListCategories();
+        $this->view->infoProd = $produit->getListProduits();
     }
 
-    public function afficherAction()
+    public function modifierAction()
     {
 //modification des catégories
         if (isset($_GET['idM'])) {

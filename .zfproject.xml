@@ -59,7 +59,7 @@
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
-            <viewScriptFile forActionName="afficher"/>
+            <viewScriptFile forActionName="modifier"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="categorie"/>

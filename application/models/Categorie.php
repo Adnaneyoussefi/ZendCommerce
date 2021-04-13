@@ -49,20 +49,17 @@ class Application_Model_Categorie
 
     public function getListCategories()
     {
-       
         return $this->client->getListCategories();
     }
 
     public function getCategorieById($id)
     {
-        
         return $this->client->getCategorieById($id);
     }
 
 
     public function deleteCategorie($id)
     {
-        
         return $this->client->deleteCategorie($id);
     }
 
@@ -77,4 +74,3 @@ class Application_Model_Categorie
     }
 
 }
-

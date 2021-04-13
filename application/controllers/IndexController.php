@@ -12,6 +12,7 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->r->gotoUrl('index/categorie')->redirectAndExit();
     }
 
     public function getProduitsAction()

@@ -64,7 +64,7 @@ class IndexController extends Zend_Controller_Action
                 $categorie->deleteCategorie($_GET['idS']);
                 echo "<script>$('#supp').show();</script>";
             } catch (Exception $e) {
-
+                echo "<script>$('#cannot').show();</script>";
             }
         }
 //modification et l'ajout

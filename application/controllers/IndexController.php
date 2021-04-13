@@ -12,13 +12,16 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
+
     }
 
     public function getProduitsAction()
     {
         $produit = new Application_Model_Produit();
-        $this->view->produits = $produit->getListProduits();
-        $this->view->produit = "ffff";
+        session_start();
+        $this->view->produits = array_reverse($produit->getListProduits());
+        $this->view->flashe = $_SESSION['action'];
+        session_destroy();
     }
 
     public function addproduitAction()
@@ -31,16 +34,25 @@ class IndexController extends Zend_Controller_Action
             $this->view->produit = $produit->getProduitById($_GET['id']);
             $this->view->action = "Modifier";
             if(isset($_POST['Modifier'])) {
-                $produit1 = new Application_Model_Produit();
-                $produit1->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
-                $_POST['quantite'], $_POST['categorie']);
-                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+                try {
+                    session_start();
+                    $_SESSION['action'] = 'modifier';
+                    $produit1 = new Application_Model_Produit();
+                    $produit1->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
+                    $_POST['quantite'], $_POST['categorie']);
+                    $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+                }catch(Exception $e) {
+                    var_dump($e);
+                }
             }
         }
         else{
             if(isset($_POST['Ajouter'])) {
+                session_start();
+                $_SESSION['action'] = 'ajouter';
                 $produit->addNewProduit($_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
                 $_POST['quantite'], $_POST['categorie']);
+                header("HTTP/1.1 201 OK");
                 $this->r->gotoUrl('index/get-produits')->redirectAndExit();
             }
         }
@@ -50,22 +62,10 @@ class IndexController extends Zend_Controller_Action
     {
         $produit = new Application_Model_Produit();
         if(isset($_GET['id'])){
+            session_start();
+            $_SESSION['action'] = 'supprimer';
             $produit->deleteProduit($_GET['id']);
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-        }
-    }
-
-    public function updateproduitAction()
-    {
-        $categorie = new Application_Model_Categorie();
-        $produit = new Application_Model_Produit();
-        $this->view->categories = $categorie->getListCategories();
-        if(isset($_GET['id'])){
-            if(isset($_POST['Modifier'])) {
-                $produit->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
-                $_POST['quantite'], $_POST['categorie']);
-                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-            }
         }
     }
 

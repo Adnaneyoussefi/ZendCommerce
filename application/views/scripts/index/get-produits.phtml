@@ -1,9 +1,25 @@
-<div class="container">
-<a href="<?=$this->url(array('action'=>'addproduit'))?>" class="btn btn-primary">Ajouter</a>
+<div class="container-fluid mt-5">
+    <a href="<?=$this->url(array('action'=>'addproduit'))?>" class="btn btn-primary mb-3">Ajouter un produit</a>
+
+    <?php if($this->flashe === 'supprimer') { ?>
+    <div class="alert alert-danger collapse" style="display: block;">
+    Le produit a été supprimé
+    </div>
+    <?php } elseif($this->flashe === 'ajouter') { ?>
+    <div class="alert alert-success collapse" style="display: block;">
+    Le produit a été ajouté
+    </div>
+    <?php } elseif($this->flashe === 'modifier') { ?>
+    <div class="alert alert-warning collapse" style="display: block;">
+    Le produit a été modifié
+    </div>
+    <?php } ?>
+
     <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">Id</th>
+                <th scope="col">Image</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Description</th>
                 <th scope="col">Prix</th>
@@ -16,6 +32,7 @@
         <?php foreach($this->produits as $p) { ?>
             <tr class="table-active">
                 <th scope="row"><?=$p->id?></th>
+                <th><img src="<?=$p->image?>" max-width="200px" height="100px"></img></th>
                 <th><?=$p->nom?></th>
                 <td><?=$p->description?></td>
                 <td><?=$p->prix?> MAD</td>
@@ -23,7 +40,7 @@
                 <td><?=$p->categorie->nom?></td>
                 <td>                
                 <a href="<?=$this->url(array('action'=>'addproduit'))?>?id=<?=$p->id?>" class="btn btn-warning">Modifier</a>
-                <a class="btn btn-danger deleteProduct" value="<?=$p->id?>" data-toggle="modal" data-target="#exampleModal">Supprimer</a>
+                <a class="btn btn-danger deleteProduct" value="<?=$p->id?>" data-toggle="modal" data-target="#deleteModal">Supprimer</a>
                 </td>
             </tr>
         <?php } ?>

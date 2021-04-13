@@ -28,20 +28,19 @@ class IndexController extends Zend_Controller_Action
         $produit = new Application_Model_Produit();
         $this->view->categories = $categorie->getListCategories();
         $this->view->action = "Ajouter";
-        if(isset($_GET['id'])){
+        if (isset($_GET['id'])) {
             $this->view->produit = $produit->getProduitById($_GET['id']);
             $this->view->action = "Modifier";
-            if(isset($_POST['Modifier'])) {
+            if (isset($_POST['Modifier'])) {
                 $produit1 = new Application_Model_Produit();
                 $produit1->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
-                $_POST['quantite'], $_POST['categorie']);
+                    $_POST['quantite'], $_POST['categorie']);
                 $this->r->gotoUrl('index/get-produits')->redirectAndExit();
             }
-        }
-        else{
-            if(isset($_POST['Ajouter'])) {
+        } else {
+            if (isset($_POST['Ajouter'])) {
                 $produit->addNewProduit($_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
-                $_POST['quantite'], $_POST['categorie']);
+                    $_POST['quantite'], $_POST['categorie']);
                 $this->r->gotoUrl('index/get-produits')->redirectAndExit();
             }
         }
@@ -50,7 +49,7 @@ class IndexController extends Zend_Controller_Action
     public function deleteproduitAction()
     {
         $produit = new Application_Model_Produit();
-        if(isset($_GET['id'])){
+        if (isset($_GET['id'])) {
             $produit->deleteProduit($_GET['id']);
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         }
@@ -58,52 +57,43 @@ class IndexController extends Zend_Controller_Action
 
     public function categorieAction()
     {
-
-        if(isset( $_GET['idS'] )){
-            try{
+//supression de catégorie
+        if (isset($_GET['idS'])) {
+            try {
                 $categorie = new Application_Model_Categorie();
                 $categorie->deleteCategorie($_GET['idS']);
-                echo "<script>
-                $('#supp').show();
-                </script>";
-            }catch(Exception $e){
+                echo "<script>$('#supp').show();</script>";
+            } catch (Exception $e) {
 
             }
         }
-        else if(isset($_POST['nom']) && empty($_POST['id'])){
-            try{
-            $categorie = new Application_Model_Categorie();
-            $this->view->info = $categorie->addNewCategorie($_POST['nom']);
-            echo "<script>
-            $('#aj').show();
-            </script>";
-        }
-        catch(Exception $e){
-        }
-
-
+//modification et l'ajout
+        else if (isset($_POST['nom']) && empty($_POST['id'])) {
+            try {
+                $categorie = new Application_Model_Categorie();
+                $this->view->info = $categorie->addNewCategorie($_POST['nom']);
+                echo "<script>$('#aj').show();</script>";
+            } catch (Exception $e) {
             }
-        else if(isset($_POST['nom']) && isset($_POST['id'])){
-        $categorie = new Application_Model_Categorie();
-        $this->view->info = $categorie->updateCategorie($_POST['id'],$_POST['nom']);
-                echo "<script>
-                $('#mod').show();
-                </script>";
         }
-
+        else if (isset($_POST['nom']) && isset($_POST['id'])) {
+                $categorie = new Application_Model_Categorie();
+                $this->view->info = $categorie->updateCategorie($_POST['id'], $_POST['nom']);
+                echo "<script>$('#mod').show();</script>";
+        }
+//affichage listes catégorie
         $categorie = new Application_Model_Categorie();
         $this->view->info = $categorie->getListCategories();
     }
 
     public function afficherAction()
     {
-
-         if(isset($_GET['idM'])){
-
-            try{
+//modification des catégories
+        if (isset($_GET['idM'])) {
+            try {
                 $categorie = new Application_Model_Categorie();
                 $this->view->catModif = $categorie->getCategorieById($_GET['idM']);
-            }catch(Exception $e){
+            } catch (Exception $e) {
 
             }
         }

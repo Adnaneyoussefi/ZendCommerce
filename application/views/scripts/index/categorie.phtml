@@ -3,8 +3,6 @@
 
 
 ?>
-
-
 <div class="container">
 <h1>Categories</h1>
 <br>
@@ -36,7 +34,7 @@
     echo  "<th scope='row'>$cat->id</th>";
     echo  "<td>$cat->nom</td>";
 	echo  "<td><a href='afficher?idM=$cat->id' ><button type='button' class='btn btn-warning'>Modifier</button></a></td>";
-	echo  "<td><a href='afficher?idS=$cat->id' ><button type='button' class='btn btn-danger'>Supprimer</button></a></td>";
+	echo  "<td><a href='?idS=$cat->id' ><button type='button' class='btn btn-danger'>Supprimer</button></a></td>";
     echo "</tr>";
  endforeach;
 

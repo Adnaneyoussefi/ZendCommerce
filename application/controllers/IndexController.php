@@ -12,7 +12,7 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-
+        $this->r->gotoUrl('index/categorie')->redirectAndExit();
     }
 
     public function getProduitsAction()
@@ -30,7 +30,7 @@ class IndexController extends Zend_Controller_Action
         $produit = new Application_Model_Produit();
         $this->view->categories = $categorie->getListCategories();
         $this->view->action = "Ajouter";
-        if(isset($_GET['id'])){
+        if (isset($_GET['id'])) {
             $this->view->produit = $produit->getProduitById($_GET['id']);
             $this->view->action = "Modifier";
             if(isset($_POST['Modifier'])) {
@@ -52,7 +52,7 @@ class IndexController extends Zend_Controller_Action
                 $_SESSION['action'] = 'ajouter';
                 $produit->addNewProduit($_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
                 $_POST['quantite'], $_POST['categorie']);
-                header("HTTP/1.1 201 OK");
+                header("HTTP/1.1 201 OK");            
                 $this->r->gotoUrl('index/get-produits')->redirectAndExit();
             }
         }
@@ -69,49 +69,48 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
-    public function categorieAction()
+public function categorieAction()
     {
-        if(isset($_POST['nom']) && empty($_POST['id'])){
-            $categorie = new Application_Model_Categorie();
-            $this->view->info = $categorie->addNewCategorie($_POST['nom']);
-
-            echo "<script>
-            $('#aj').show();
-            </script>";
-
-
-            }
-        else if(isset($_POST['nom']) && isset($_POST['id'])){
-        $categorie = new Application_Model_Categorie();
-        $this->view->info = $categorie->updateCategorie($_POST['id'],$_POST['nom']);
-                echo "<script>
-        $('#mod').show();
-        </script>";
-        }
-        $categorie = new Application_Model_Categorie();
-        $this->view->info = $categorie->getListCategories();
-    }
-
-    public function afficherAction()
-    {
-        if(isset( $_GET['idS'] )){
-            try{
+//supression de catégorie
+        if (isset($_GET['idS'])) {
+            try {
                 $categorie = new Application_Model_Categorie();
                 $categorie->deleteCategorie($_GET['idS']);
-                header("Location: categorie");
-                echo "<script>
-                $('#supp').show();
-                </script>";
-            }catch(Exception $e){
+                echo "<script>$('#supp').show();</script>";
+            } catch (Exception $e) {
+                echo "<script>$('#cannot').show();</script>";
+            }
+        }
+//modification et l'ajout
+        else if (isset($_POST['nom']) && empty($_POST['id'])) {
+            try {
+                $categorie = new Application_Model_Categorie();
+                $this->view->info = $categorie->addNewCategorie($_POST['nom']);
+                echo "<script>$('#aj').show();</script>";
+            } catch (Exception $e) {
 
             }
         }
-        else if(isset($_GET['idM'])){
+        else if (isset($_POST['nom']) && isset($_POST['id'])) {
+                $categorie = new Application_Model_Categorie();
+                $this->view->info = $categorie->updateCategorie($_POST['id'], $_POST['nom']);
+                echo "<script>$('#mod').show();</script>";
+        }
+//affichage listes des catégories
+        $categorie = new Application_Model_Categorie();
+        $produit = new Application_Model_Produit();
+        $this->view->info = $categorie->getListCategories();
+        $this->view->infoProd = $produit->getListProduits();
+    }
 
-            try{
+    public function modifierAction()
+    {
+//modification des catégories
+        if (isset($_GET['idM'])) {
+            try {
                 $categorie = new Application_Model_Categorie();
                 $this->view->catModif = $categorie->getCategorieById($_GET['idM']);
-            }catch(Exception $e){
+            } catch (Exception $e) {
 
             }
         }

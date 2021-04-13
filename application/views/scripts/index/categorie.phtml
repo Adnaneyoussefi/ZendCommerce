@@ -1,7 +1,7 @@
+
 <div class="container">
 <h1>Categories</h1>
 <br>
-<a href="<?=$this->url(array('action'=>'afficher'))?>" ><button type='button' class='btn btn-primary'>Ajouter</button></a>
 
 <div class="alert alert-danger collapse" id="supp">
   Categorie a été supprimé
@@ -12,46 +12,72 @@
 <div class="alert alert-success collapse" id="mod">
   Categorie a été modifié
 </div>
+<div class="alert alert-warning collapse" id="cannot">
+ Attention Categorie associe à un produit !!
+</div>
 
-<table class="table">
+<table class="table table-bordered">
   <thead>
     <tr>
 	<th scope="col">Id</th>
 	<th scope="col">Categorie</th>
 	<th scope="col" colspan="2">Actions</th>
-
+	<th scope="col" >Produits</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody style="background-color:#dadada;">
   <?php
   foreach ($this->info as $cat) :
 	echo "<tr>";
     echo "<tr>";
     echo  "<th scope='row'>$cat->id</th>";
     echo  "<td>$cat->nom</td>";
-	echo  "<td><a href='afficher?idM=$cat->id' ><button type='button' class='btn btn-warning'>Modifier</button></a></td>";
-	echo  "<td><a href='afficher?idS=$cat->id' ><button type='button' class='btn btn-danger'>Supprimer</button></a></td>";
-    echo "</tr>";
+	echo  "<td><a href='modifier?idM=$cat->id' ><button type='button' class='btn btn-warning'>Modifier</button></a></td>";
+	echo  "<td><a href='?idS=$cat->id' ><button type='button' class='btn btn-danger'>Supprimer</button></a></td>";
+  echo "<td>";
+  echo "<div style='vertical-align: top;text-align: center; display: inline;' >";
+  foreach($this->infoProd as $prod) :
+      if($prod->categorie->id == $cat->id){
+        echo "<img src='$prod->image'  style='width:65px ; height:85px;' />";
+        echo "<div style='display:inline-block;' class='btn btn-link' data-toggle='modal' data-target='#exampleModal'>$prod->nom</div>";
+      }
+  endforeach;
+echo "<div>";
+  echo "</td>";
+  echo "</tr>";
  endforeach;
 
-
 	?>
+
+<!-- Modal 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+-->
+
+
+
+
+
   </tbody>
 </table>
-
-
-<?php
-/*
-        if(isset($_GET['idS'])){
-                echo "
-              <script>
-              $('#supp').show();
-              alert('hello');
-              </script>
-              ";
-        }
-*/
-?>
-
+<center><a href="<?=$this->url(array('action'=>'modifier'))?>" ><button type='button' class='btn btn-primary'>Ajouter</button></a>
 
 </div>

@@ -8,8 +8,11 @@ class Application_Model_Categorie
 
     private $produits = [];
 
-    public function __construct() {
-        $this->client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+    public function __construct()
+    {
+        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $apikey = $config->getOption('apikey');
+        $this->client = new Zend_Soap_Client($apikey);
     }
 
     public function getId()
@@ -57,7 +60,6 @@ class Application_Model_Categorie
         return $this->client->getCategorieById($id);
     }
 
-
     public function deleteCategorie($id)
     {
         return $this->client->deleteCategorie($id);
@@ -68,9 +70,9 @@ class Application_Model_Categorie
         return $this->client->addNewCategorie($nom);
     }
 
-    public function updateCategorie($id,$nom)
+    public function updateCategorie($id, $nom)
     {
-        return $this->client->updateCategorie($id,$nom);
+        return $this->client->updateCategorie($id, $nom);
     }
 
 }

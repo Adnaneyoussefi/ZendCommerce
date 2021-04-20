@@ -2,7 +2,6 @@
 
 class IndexController extends Zend_Controller_Action
 {
-
     private $r = null;
 
     public function init()
@@ -15,6 +14,7 @@ class IndexController extends Zend_Controller_Action
         $this->r->gotoUrl('index/categorie')->redirectAndExit();
     }
 
+    //List des produits
     public function getProduitsAction()
     {
         $produit = new Application_Model_Produit();
@@ -24,12 +24,14 @@ class IndexController extends Zend_Controller_Action
         session_destroy();
     }
 
+    //L'ajout et la modification de produit
     public function addproduitAction()
     {
         $categorie = new Application_Model_Categorie();
         $produit = new Application_Model_Produit();
         $this->view->categories = $categorie->getListCategories();
         $this->view->action = "Ajouter";
+        //modification de produit
         if (isset($_GET['id'])) {
             $this->view->produit = $produit->getProduitById($_GET['id']);
             $this->view->action = "Modifier";
@@ -47,6 +49,7 @@ class IndexController extends Zend_Controller_Action
             }
         }
         else{
+            //Ajout de produit
             if(isset($_POST['Ajouter'])) {
                 session_start();
                 $_SESSION['action'] = 'ajouter';
@@ -58,6 +61,7 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
+    //Suppression de produit
     public function deleteproduitAction()
     {
         $produit = new Application_Model_Produit();
@@ -69,9 +73,9 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
-public function categorieAction()
+    public function categorieAction()
     {
-//supression de catégorie
+    //supression de catégorie
         if (isset($_GET['idS'])) {
             try {
                 $categorie = new Application_Model_Categorie();
@@ -81,7 +85,7 @@ public function categorieAction()
                 echo "<script>$('#cannot').show();</script>";
             }
         }
-//modification et l'ajout
+    //modification et l'ajout
         else if (isset($_POST['nom']) && empty($_POST['id'])) {
             try {
                 $categorie = new Application_Model_Categorie();
@@ -96,7 +100,7 @@ public function categorieAction()
                 $this->view->info = $categorie->updateCategorie($_POST['id'], $_POST['nom']);
                 echo "<script>$('#mod').show();</script>";
         }
-//affichage listes des catégories
+    //affichage listes des catégories
         $categorie = new Application_Model_Categorie();
         $produit = new Application_Model_Produit();
         $this->view->info = $categorie->getListCategories();
@@ -105,7 +109,7 @@ public function categorieAction()
 
     public function modifierAction()
     {
-//modification des catégories
+    //modification des catégories
         if (isset($_GET['idM'])) {
             try {
                 $categorie = new Application_Model_Categorie();

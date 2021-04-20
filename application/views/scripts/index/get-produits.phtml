@@ -1,6 +1,4 @@
 <div class="container-fluid mt-5">
-    <a href="<?=$this->url(array('action'=>'addproduit'))?>" class="btn btn-primary mb-3">Ajouter un produit</a>
-
     <?php if($this->flashe === 'supprimer') { ?>
     <div class="alert alert-danger collapse" style="display: block;">
     Le produit a été supprimé
@@ -14,6 +12,8 @@
     Le produit a été modifié
     </div>
     <?php } ?>
+    
+    <a href="<?=$this->url(array('action'=>'addproduit'))?>" class="btn btn-primary mb-3">Ajouter un produit</a>
 
     <table class="table table-hover">
         <thead>

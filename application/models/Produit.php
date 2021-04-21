@@ -18,8 +18,11 @@ class Application_Model_Produit
 
     private $client;
 
-    public function __construct() {
-        $this->client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+    public function __construct()
+    {
+        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $apikey = $config->getOption('apikey');
+        $this->client = new Zend_Soap_Client($apikey);
     }
 
     public function getId()
@@ -104,10 +107,12 @@ class Application_Model_Produit
         $client = $this->client;
         $produits = $this->client->getListProduits();
         $categories = $this->client->getListCategories();
-        foreach($produits as $p) {
-            foreach($categories as $c) {
-                if($p->categorie->id === $c->id)
+        foreach ($produits as $p) {
+            foreach ($categories as $c) {
+                if ($p->categorie->id === $c->id) {
                     $p->categorie = $c;
+                }
+
             }
         }
         return $produits;
@@ -137,4 +142,3 @@ class Application_Model_Produit
         return $client->updateProduit($id, $nom, $description, $prix, $image, $quantite, $categorie_id);
     }
 }
-

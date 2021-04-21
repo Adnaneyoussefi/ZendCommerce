@@ -8,8 +8,14 @@ class Application_Model_Categorie
 
     private $produits = [];
 
-    public function __construct() {
-        $this->client = new Zend_Soap_Client('http://127.0.0.1:8000/soap?wsdl');
+    private $bouchonne;
+
+    public function __construct()
+    {
+        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $apikey = $config->getOption('apikey');
+        $this->client = new Zend_Soap_Client($apikey);
+        $this->bouchonne = $config->getOption('bouchonne');
     }
 
     public function getId()
@@ -49,14 +55,23 @@ class Application_Model_Categorie
 
     public function getListCategories()
     {
-        return $this->client->getListCategories();
+        if($this->bouchonne == 'on') {
+            $path_xml = APPLICATION_PATH . '/configs/getListCategories.xml';
+            $xml = file_get_contents($path_xml);
+            $xml = preg_replace('#[a-zA-Z0-9]+="[\#a-zA-Z0-9]+"#', '', $xml);
+            $xml = simplexml_load_string($xml);
+            $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
+            $arrayResult = json_decode(json_encode($data));
+            return $arrayResult;
+        }
+        else
+            return $this->client->getListCategories();
     }
 
     public function getCategorieById($id)
     {
         return $this->client->getCategorieById($id);
     }
-
 
     public function deleteCategorie($id)
     {
@@ -68,9 +83,9 @@ class Application_Model_Categorie
         return $this->client->addNewCategorie($nom);
     }
 
-    public function updateCategorie($id,$nom)
+    public function updateCategorie($id, $nom)
     {
-        return $this->client->updateCategorie($id,$nom);
+        return $this->client->updateCategorie($id, $nom);
     }
 
 }

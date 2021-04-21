@@ -2,6 +2,7 @@
 
 class IndexController extends Zend_Controller_Action
 {
+
     private $r = null;
 
     public function init()
@@ -14,7 +15,6 @@ class IndexController extends Zend_Controller_Action
         $this->r->gotoUrl('index/categorie')->redirectAndExit();
     }
 
-    //List des produits
     public function getProduitsAction()
     {
         $produit = new Application_Model_Produit();
@@ -24,7 +24,6 @@ class IndexController extends Zend_Controller_Action
         session_destroy();
     }
 
-    //L'ajout et la modification de produit
     public function addproduitAction()
     {
         $categorie = new Application_Model_Categorie();
@@ -61,7 +60,6 @@ class IndexController extends Zend_Controller_Action
         }
     }
 
-    //Suppression de produit
     public function deleteproduitAction()
     {
         $produit = new Application_Model_Produit();
@@ -118,5 +116,16 @@ class IndexController extends Zend_Controller_Action
 
             }
         }
+    }
+
+    public function testtAction()
+    {
+        $path_xml = APPLICATION_PATH . '/configs/getCategorieById.xml';
+        $xml = file_get_contents($path_xml);
+        $xml = preg_replace('#[a-zA-Z0-9]+="[\#a-zA-Z0-9]+"#', '', $xml);
+        $xml = simplexml_load_string($xml);
+        $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
+        $arrayResult = json_decode(json_encode($data));
+        var_dump($arrayResult);
     }
 }

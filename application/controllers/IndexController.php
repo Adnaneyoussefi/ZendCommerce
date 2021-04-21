@@ -36,40 +36,27 @@ class IndexController extends Zend_Controller_Action
             $this->view->produit = $produit->getProduitById($_GET['id']);
             $this->view->action = "Modifier";
             if (isset($_POST['Modifier'])) {
-                    session_start();
-                    $_SESSION['action'] = 'modifier';
-                    if (empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['prix']) || empty($_POST['quantite'])) {
-                        echo "<script>$('#inc').show();</script>";
-                    } else if (!is_numeric($_POST['prix'])) {
-                        echo "<script>$('#prix').show();</script>";
-                    } else if (!is_numeric($_POST['quantite'])) {
-                        echo "<script>$('#quantite').show();</script>";
-                    }
-                     else {
+                session_start();
+                $_SESSION['action'] = 'modifier';
+                if (!empty($_POST['nom']) || !empty($_POST['description']) || !empty($_POST['prix']) || !empty($_POST['quantite'])) {
                     $produit1 = new Application_Model_Produit();
                     $produit1->updateProduit($_GET['id'], $_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
                         $_POST['quantite'], $_POST['categorie']);
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-                    }
+                }
             }
         } else {
             //Ajout de produit
             if (isset($_POST['Ajouter'])) {
                 session_start();
                 $_SESSION['action'] = 'ajouter';
-                if (empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['prix']) || empty($_POST['quantite'])) {
-                    echo "<script>$('#inc').show();</script>";
-                } else if (!is_numeric($_POST['prix'])) {
-                    echo "<script>$('#prix').show();</script>";
-                } else if (!is_numeric($_POST['quantite'])) {
-                    echo "<script>$('#quantite').show();</script>";
-                } else {
+                if (!empty($_POST['nom']) || !empty($_POST['description']) || !empty($_POST['prix']) || !empty($_POST['quantite'])) {
                     $produit->addNewProduit($_POST['nom'], $_POST['description'], $_POST['prix'], $_POST['image'],
-                        $_POST['quantite'], $_POST['categorie']);
+                    $_POST['quantite'], $_POST['categorie']);
                     header("HTTP/1.1 201 OK");
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-                }
             }
+        }
         }
     }
 
@@ -129,7 +116,6 @@ class IndexController extends Zend_Controller_Action
 
             }
         }
-
 
     }
 

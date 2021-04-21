@@ -2,11 +2,11 @@
 
 <br><br>
 
-<div class="alert alert-danger collapse" id="inc">
-  Categorie a été supprimé
+<div class="alert alert-danger collapse" id="catN">
+  Remplir categorie
 </div>
 
-<form method="post" action="categorie">
+<form method="post" action="categorie" id="formCat">
   <div class="form-group">
     <label for="exampleInputEmail1">Nom de la Categorie</label>
     <input type="text" class="form-control" name="nom"  value="<?php if(isset($this->catModif) && !empty($this->catModif)){ echo $this->catModif->nom;}?>">

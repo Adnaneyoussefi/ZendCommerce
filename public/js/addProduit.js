@@ -1,4 +1,7 @@
 $(document).ready(() => {
+    function isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      }
     $('#form').submit((e) => {
         $bool = true;
         var nom = document.forms["form"]["nom"];
@@ -24,18 +27,33 @@ $(document).ready(() => {
 
         if (prix.value == "") {
             $('#prix').show();
+            $('#prixNot').hide();
             prix.focus();
             $bool = false;
-        } else {
+        }else if(isNumeric(prix.value)==false) {
             $('#prix').hide();
+            $('#prixNot').show();
+            prix.focus();
+            $bool = false;
+        }
+        else {
+            $('#prix').hide();
+            $('#prixNot').hide();
         }
 
         if (quantite.value == "") {
             $('#quantite').show();
+            $('#quantiteNot').hide();
             quantite.focus();
             $bool = false;
-        } else {
+        } else   if (isNumeric(quantite.value)==false){
             $('#quantite').hide();
+            $('#quantiteNot').show();
+            quantite.focus();
+            $bool = false;
+        }else {
+            $('#quantite').hide();
+            $('#quantiteNot').hide();
         }
 
         if ($bool) {

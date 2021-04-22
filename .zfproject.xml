@@ -27,9 +27,15 @@
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
         <modelFile modelName="Categorie"/>
+        <modelFile modelName="Produit"/>
+        <modelFile modelName="ProduitService"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
-      <servicesDirectory enabled="false"/>
+      <servicesDirectory>
+        <modelFile modelName="CategorieService"/>
+        <modelFile modelName="CommerceAPI"/>
+        <modelFile modelName="RessourceInterface"/>
+      </servicesDirectory>
       <viewsDirectory>
         <viewScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">

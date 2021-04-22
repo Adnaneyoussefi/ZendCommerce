@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="urn:commerceservicewsdl" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <SOAP-ENV:Body>
+        <ns1:getListProduitsResponse>
+            <return SOAP-ENC:arrayType="ns1:Produit[4]" xsi:type="ns1:ListeProduits">
+                <item xsi:type="ns1:Produit">
+                    <id xsi:type="xsd:int">19</id>
+                    <nom xsi:type="xsd:string">Sumsung Galaxy A02S</nom>
+                    <description xsi:type="xsd:string">4GB RAM 60GB</description>
+                    <prix xsi:type="xsd:float">1400</prix>
+                    <image xsi:type="xsd:string">https://evotrading.ma/wp-content/uploads/2021/02/smartphone-samsung-galaxy-a02s-4gb-64go-rouge-sm-a025fzrfmwd.png</image>
+                    <quantite xsi:type="xsd:int">32</quantite>
+                    <categorie xsi:type="xsd:Categorie">
+                        <__initializer__ xsi:type="SOAP-ENC:Struct" id="ref1"/>
+                        <__cloner__ xsi:type="SOAP-ENC:Struct" id="ref2"/>
+                        <__isInitialized__ xsi:type="xsd:boolean">false</__isInitialized__>
+                        <id xsi:type="xsd:int">1</id>
+                        <nom xsi:nil="true"/>
+                        <produits xsi:nil="true"/>
+                    </categorie>
+                </item>
+                <item xsi:type="ns1:Produit">
+                    <id xsi:type="xsd:int">20</id>
+                    <nom xsi:type="xsd:string">Playstation 4</nom>
+                    <description xsi:type="xsd:string">Fifa 2021 / PES 2020 / CS / PUBG</description>
+                    <prix xsi:type="xsd:float">3300</prix>
+                    <image xsi:type="xsd:string">https://gmedia.playstation.com/is/image/SIEPDC/ps4-pro-console-02-en-26oct18?$facebook$</image>
+                    <quantite xsi:type="xsd:int">41</quantite>
+                    <categorie xsi:type="xsd:Categorie">
+                        <__initializer__ href="#ref1"/>
+                        <__cloner__ href="#ref2"/>
+                        <__isInitialized__ xsi:type="xsd:boolean">false</__isInitialized__>
+                        <id xsi:type="xsd:int">3</id>
+                        <nom xsi:nil="true"/>
+                        <produits xsi:nil="true"/>
+                    </categorie>
+                </item>
+                <item xsi:type="ns1:Produit">
+                    <id xsi:type="xsd:int">30</id>
+                    <nom xsi:type="xsd:string">Dell Lattitude</nom>
+                    <description xsi:type="xsd:string">I4 4Ã¨me gÃ©nÃ©ration 8GB Ram 300GB SSD</description>
+                    <prix xsi:type="xsd:float">3220</prix>
+                    <image xsi:type="xsd:string">https://evotrading.ma/wp-content/uploads/2021/01/pc-portable-dell-latitude-3410-i3-10110u-4gb-1to-n001l341014emea.png</image>
+                    <quantite xsi:type="xsd:int">41</quantite>
+                    <categorie xsi:type="xsd:Categorie" id="ref3">
+                        <__initializer__ href="#ref1"/>
+                        <__cloner__ href="#ref2"/>
+                        <__isInitialized__ xsi:type="xsd:boolean">false</__isInitialized__>
+                        <id xsi:type="xsd:int">2</id>
+                        <nom xsi:nil="true"/>
+                        <produits xsi:nil="true"/>
+                    </categorie>
+                </item>
+                <item xsi:type="ns1:Produit">
+                    <id xsi:type="xsd:int">45</id>
+                    <nom xsi:type="xsd:string">Dell</nom>
+                    <description xsi:type="xsd:string">I7 7Ã¨me gÃ©nÃ©ration 8GB RAM 500GB</description>
+                    <prix xsi:type="xsd:float">4500</prix>
+                    <image xsi:type="xsd:string"></image>
+                    <quantite xsi:type="xsd:int">65</quantite>
+                    <categorie href="#ref3" xsi:type="xsd:Categorie"/>
+                </item>
+            </return>
+        </ns1:getListProduitsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

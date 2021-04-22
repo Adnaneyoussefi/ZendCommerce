@@ -57,12 +57,7 @@ class Application_Model_Categorie
     {
         if($this->bouchonne == 'on') {
             $path_xml = APPLICATION_PATH . '/configs/getListCategories.xml';
-            $xml = file_get_contents($path_xml);
-            $xml = preg_replace('#[a-zA-Z0-9]+="[\#a-zA-Z0-9]+"#', '', $xml);
-            $xml = simplexml_load_string($xml);
-            $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
-            $arrayResult = json_decode(json_encode($data));
-            return $arrayResult;
+            return $this->convertResponseXML($path_xml);
         }
         else
             return $this->client->getListCategories();
@@ -88,4 +83,13 @@ class Application_Model_Categorie
         return $this->client->updateCategorie($id, $nom);
     }
 
+    public function convertResponseXML($path_xml)
+    {
+        $xml = file_get_contents($path_xml);
+        //$xml = preg_replace('#[a-zA-Z0-9]+="[\#a-zA-Z0-9]+"#', '', $xml);
+        $xml = simplexml_load_string($xml);
+        $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
+        $arrayResult = json_decode(json_encode($data));
+        return $arrayResult->item;
+    }
 }

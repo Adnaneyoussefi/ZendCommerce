@@ -18,11 +18,14 @@ class Application_Model_Produit
 
     private $client;
 
+    private $bouchonne;
+
     public function __construct()
     {
         $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
         $apikey = $config->getOption('apikey');
         $this->client = new Zend_Soap_Client($apikey);
+        $this->bouchonne = $config->getOption('bouchonne');
     }
 
     public function getId()
@@ -104,15 +107,24 @@ class Application_Model_Produit
 
     public function getListProduits()
     {
-        $client = $this->client;
-        $produits = $this->client->getListProduits();
-        $categories = $this->client->getListCategories();
+        //$client = $this->client;
+        $produits = [];
+        $categories = [];
+        if($this->bouchonne == 'on') {
+            $path_xml1 = APPLICATION_PATH . '/configs/getListProduits.xml';
+            $path_xml2 = APPLICATION_PATH . '/configs/getListCategories.xml';
+            $produits = $this->convertResponseXML($path_xml1);
+            $categories = $this->convertResponseXML($path_xml2);
+        }
+        else{
+            $produits = $this->client->getListProduits();
+            $categories = $this->client->getListCategories();
+        }
         foreach ($produits as $p) {
             foreach ($categories as $c) {
                 if ($p->categorie->id === $c->id) {
                     $p->categorie = $c;
                 }
-
             }
         }
         return $produits;
@@ -140,5 +152,15 @@ class Application_Model_Produit
     {
         $client = $this->client;
         return $client->updateProduit($id, $nom, $description, $prix, $image, $quantite, $categorie_id);
+    }
+
+    public function convertResponseXML($path_xml)
+    {
+        $xml = file_get_contents($path_xml);
+        //$xml = preg_replace('#[a-zA-Z0-9]+="[\#a-zA-Z0-9]+"#', '', $xml);
+        $xml = simplexml_load_string($xml);
+        $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
+        $arrayResult = json_decode(json_encode($data));
+        return $arrayResult->item;
     }
 }

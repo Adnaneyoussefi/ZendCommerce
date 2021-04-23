@@ -51,15 +51,6 @@
                         <produits xsi:nil="true"/>
                     </categorie>
                 </item>
-                <item xsi:type="ns1:Produit">
-                    <id xsi:type="xsd:int">45</id>
-                    <nom xsi:type="xsd:string">Dell</nom>
-                    <description xsi:type="xsd:string">I7 7Ã¨me gÃ©nÃ©ration 8GB RAM 500GB</description>
-                    <prix xsi:type="xsd:float">4500</prix>
-                    <image xsi:type="xsd:string"></image>
-                    <quantite xsi:type="xsd:int">65</quantite>
-                    <categorie href="#ref3" xsi:type="xsd:Categorie"/>
-                </item>
             </return>
         </ns1:getListProduitsResponse>
     </SOAP-ENV:Body>

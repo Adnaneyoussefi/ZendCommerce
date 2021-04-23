@@ -48,8 +48,9 @@ class IndexController extends Zend_Controller_Action
                     }
                      else {
                     $this->commerceApiProduit->updateModelById($_GET['id'], $_POST);
+
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-                    }
+                }
             }
         } else {
             //Ajout de produit
@@ -64,10 +65,11 @@ class IndexController extends Zend_Controller_Action
                     echo "<script>$('#quantite').show();</script>";
                 } else {
                     $this->commerceApiProduit->addModel($_POST);
+
                     header("HTTP/1.1 201 OK");
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-                }
             }
+        }
         }
     }
 

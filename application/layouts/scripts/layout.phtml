@@ -3,7 +3,7 @@ $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
 $this->headTitle()->setSeparator(' - ');
 $this->headTitle('');
 
-echo $this->doctype(); ?>
+echo $this->doctype();?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
   <head>
       <?php echo $this->HeadMeta(); ?>
@@ -15,6 +15,8 @@ echo $this->doctype(); ?>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
       <script src="../js/deleteProduit.js"></script>
+      <script src="../js/addProduit.js"></script>
+      <script src="../js/addCategories.js"></script>
       </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,10 +28,10 @@ echo $this->doctype(); ?>
       <div class="collapse navbar-collapse" id="navbarColor03">
           <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-              <a class="nav-link" href="<?=$this->url(array('action'=>'get-produits'))?>">Liste des produits</a>
+              <a class="nav-link" href="<?=$this->url(array('action' => 'get-produits'))?>">Liste des produits</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="<?=$this->url(array('action'=>'categorie'))?>">Liste des catégories</a>
+              <a class="nav-link" href="<?=$this->url(array('action' => 'categorie'))?>">Liste des catégories</a>
           </li>
           </ul>
       </div>

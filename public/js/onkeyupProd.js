@@ -6,9 +6,15 @@ $("#inputNom").keyup(function(){
 $("#inputDesc").keyup(function(){
     $('#desc').hide();
 });
-$("#inputPrix").keyup(function(){
+$("#inputPrix").keyup((e) => {
+    
+    let prix = e.currentTarget.value;
+    if(prix == Number(prix))
+        $('#prixNot').hide();
+    else 
+        $('#prixNot').show();
     $('#prix').hide();
-    $('#prixNot').hide();
+    
 });
 $("#inputQuantite").keyup(function(){
     $('#quantite').hide();

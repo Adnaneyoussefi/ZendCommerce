@@ -18,6 +18,5 @@ $(document).ready(() => {
         } else {
             e.preventDefault();
         }
-        
     })
 })

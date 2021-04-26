@@ -2,15 +2,16 @@
 
 class Application_Model_CategorieService extends Application_Model_RessourceInterface
 {
-    
+
     public function getList()
     {
-        if($this->bouchonne == 'on') {
+        if ($this->bouchonne == 'on') {
             $path_xml = APPLICATION_PATH . '/configs/getListCategories.xml';
             return $this->convertResponseXML($path_xml);
-        }
-        else
+        } else {
             return $this->client->getListCategories();
+        }
+
     }
 
     public function get($id)
@@ -33,4 +34,3 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
         return $this->client->deleteCategorie($id);
     }
 }
-

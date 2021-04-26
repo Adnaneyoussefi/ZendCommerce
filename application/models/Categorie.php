@@ -55,12 +55,13 @@ class Application_Model_Categorie
 
     public function getListCategories()
     {
-        if($this->bouchonne == 'on') {
+        if ($this->bouchonne == 'on') {
             $path_xml = APPLICATION_PATH . '/configs/getListCategories.xml';
             return $this->convertResponseXML($path_xml);
-        }
-        else
+        } else {
             return $this->client->getListCategories();
+        }
+
     }
 
     public function getCategorieById($id)

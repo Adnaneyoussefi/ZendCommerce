@@ -38,7 +38,7 @@
                 <item xsi:type="ns1:Produit">
                     <id xsi:type="xsd:int">30</id>
                     <nom xsi:type="xsd:string">Dell Lattitude</nom>
-                    <description xsi:type="xsd:string">I4 4Ã¨me gÃ©nÃ©ration 8GB Ram 300GB SSD</description>
+                    <description xsi:type="xsd:string">I4 4ème génération 8GB Ram 300GB SSD</description>
                     <prix xsi:type="xsd:float">3220</prix>
                     <image xsi:type="xsd:string">https://evotrading.ma/wp-content/uploads/2021/01/pc-portable-dell-latitude-3410-i3-10110u-4gb-1to-n001l341014emea.png</image>
                     <quantite xsi:type="xsd:int">41</quantite>

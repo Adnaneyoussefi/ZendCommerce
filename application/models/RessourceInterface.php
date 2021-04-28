@@ -6,7 +6,7 @@ abstract class Application_Model_RessourceInterface
     {
         $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
         $apikey = $config->getOption('apikey');
-        $this->client = new Zend_Soap_Client($apikey);
+        $this->client = new Application_Model_CustomSoapClient($apikey);
         $this->bouchonne = $config->getOption('bouchonne');
     }
 

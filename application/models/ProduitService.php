@@ -2,21 +2,20 @@
 
 class Application_Model_ProduitService extends Application_Model_RessourceInterface
 {
+    private $path_xml_produit = "";
 
+    private $path_xml_categorie = "";
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->path_xml_produit = APPLICATION_PATH . '/configs/getListProduits.xml';
+        $this->path_xml_categorie = APPLICATION_PATH . '/configs/getListCategories.xml';
+    }
     public function getList()
     {
-        $produits = [];
-        $categories = [];
-        if($this->bouchonne == 'on') {
-            $path_xml1 = APPLICATION_PATH . '/configs/getListProduits.xml';
-            $path_xml2 = APPLICATION_PATH . '/configs/getListCategories.xml';
-            $produits = $this->convertResponseXML($path_xml1);
-            $categories = $this->convertResponseXML($path_xml2);
-        }
-        else{
-            $produits = $this->client->getListProduits();
-            $categories = $this->client->getListCategories();
-        }
+        $produits = $this->client->call('getListProduits', array(), $this->path_xml_produit);
+        $categories = $this->client->call('getListCategories', array(), $this->path_xml_categorie);
         foreach ($produits as $p) {
             foreach ($categories as $c) {
                 if ($p->categorie->id === $c->id) {
@@ -29,24 +28,24 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
 
     public function get($id)
     {
-        return $this->client->getProduitById($id);
+        return $this->client->call('getProduitById', array($id), $this->path_xml_produit);
     }
 
     public function add($obj)
     {
-        return $this->client->addNewProduit($obj['nom'], $obj['description'], $obj['prix'], '', $obj['quantite'],
-        $obj['categorie']);
+        $array = [$obj['nom'], $obj['description'], $obj['prix'], '', $obj['quantite'], $obj['categorie']];
+        return $this->client->call('addNewProduit', $array, $this->path_xml_produit);
     }
 
     public function update($id, $obj)
     {
-        return $this->client->updateProduit($id, $obj['nom'], $obj['description'], $obj['prix'], '', $obj['quantite'],
-        $obj['categorie']);
+        $array = [$id, $obj['nom'], $obj['description'], $obj['prix'], '', $obj['quantite'], $obj['categorie']];
+        return $this->client->call('updateProduit', $array, $this->path_xml_produit);
     }
 
     public function delete($id)
     {
-        return $this->client->deleteProduit($id);
+        return $this->client->call('deleteProduit', array($id), $this->path_xml_produit);
     }
 }
 

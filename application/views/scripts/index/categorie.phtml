@@ -24,6 +24,7 @@
   </thead>
   <tbody style="background-color:#dadada;">
   <?php
+  if($this->info) {
   foreach ($this->info as $cat) :
 	echo "<tr>";
     echo "<tr>";
@@ -34,7 +35,7 @@
   echo "<td>";
   echo "<div style='vertical-align: top;text-align: center; display: inline;' >";
   foreach($this->infoProd as $prod) :
-      if($prod->categorie->id == $cat->id){
+      if($prod->categorie->id == $cat->id) {
         echo "<img src='$prod->image'  style='width:65px ; height:85px;' />";
         echo "<div style='display:inline-block;' class='btn btn-link' data-toggle='modal' data-target='#exampleModal'>$prod->nom</div>";
       }
@@ -43,8 +44,13 @@ echo "<div>";
   echo "</td>";
   echo "</tr>";
  endforeach;
-
+  }
+  else {
 	?>
+    <tr>
+      <td colspan="5">Aucune résultat</td>
+    </tr>
+  <?php }?>
   </tbody>
 </table>
 <center><a href="<?=$this->url(array('action'=>'modifier'))?>" ><button type='button' class='btn btn-primary'>Ajouter</button></a>

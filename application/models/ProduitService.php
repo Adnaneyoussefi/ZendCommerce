@@ -9,21 +9,24 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
     public function __construct()
     {
         parent::__construct();
-        $this->path_xml_produit = APPLICATION_PATH . '/configs/getListProduits.xml';
-        $this->path_xml_categorie = APPLICATION_PATH . '/configs/getListCategories.xml';
+        $this->path_xml_produit = 'getListProduits';
+        $this->path_xml_categorie = 'getListCategories';
     }
     public function getList()
     {
         $produits = $this->client->call('getListProduits', array(), $this->path_xml_produit);
         $categories = $this->client->call('getListCategories', array(), $this->path_xml_categorie);
-        foreach ($produits as $p) {
-            foreach ($categories as $c) {
-                if ($p->categorie->id === $c->id) {
-                    $p->categorie = $c;
+        if(isset($produits) && isset($categories))
+            foreach ($produits as $p) {
+                foreach ($categories as $c) {
+                    if ($p->categorie->id === $c->id) {
+                        $p->categorie = $c;
+                    }
                 }
             }
-        }
-        return $produits;
+            //var_dump($produits);
+            return $produits;
+            
     }
 
     public function get($id)

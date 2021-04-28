@@ -2,17 +2,26 @@
 
 class Application_Model_CustomSoapClient extends Zend_Soap_Client
 {
-    private $result = [];
-    public function call($function_name, $arguments, $path_xml)
+    public function call($function_name, $arguments, $ws_name)
     {
+        $result = [];
         $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
-        $bouchonne = $config->getOption('bouchonne');
-        if ($bouchonne == 'on') {
-            $this->result = $this->convertResponseXML($path_xml);
+        $bouchon = $config->getOption('bouchon');
+        if ($bouchon['enabled'] == true) {
+            $xml_path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
+            .DIRECTORY_SEPARATOR.$bouchon['directory']
+            .DIRECTORY_SEPARATOR.$bouchon['active_uc']
+            .DIRECTORY_SEPARATOR.$ws_name.'.xml';
+
+            if(file_exists($xml_path))
+                $result = $this->convertResponseXML($xml_path);
+            else
+                throw new Zend_Exception("Le fichier ".$xml_path." n'existe pas");
+
         } else {
-            $this->result = parent::__call($function_name, $arguments);
+            $result = parent::__call($function_name, $arguments);
         }
-        return $this->result;
+        return $result;
     }
 
     public function convertResponseXML($path_xml)
@@ -21,6 +30,16 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
         $xml = simplexml_load_string($xml);
         $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
         $arrayResult = json_decode(json_encode($data));
-        return $arrayResult->item;
+        
+            //throw new Zend_Exception("Le résultat est null");
+        try {
+            if(!isset($arrayResult->item)) {
+                throw new Zend_Exception('Le résultat est null');
+            }
+            return $arrayResult->item;
+        } catch(Zend_Exception $e) {
+            var_dump($e->getMessage());
+        }
+        
     }
 }

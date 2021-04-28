@@ -31,14 +31,19 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
         $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
         $arrayResult = json_decode(json_encode($data));
         
-            //throw new Zend_Exception("Le résultat est null");
         try {
-            if(!isset($arrayResult->item)) {
+            if(isset($arrayResult->item) && isset($arrayResult)) {
+                return $arrayResult->item;
+            }
+            elseif(isset($arrayResult)) {
+                return $arrayResult;
+            }
+            else {
                 throw new Zend_Exception('Le résultat est null');
             }
-            return $arrayResult->item;
+            
         } catch(Zend_Exception $e) {
-            var_dump($e->getMessage());
+            echo $e->getMessage()." ";
         }
         
     }

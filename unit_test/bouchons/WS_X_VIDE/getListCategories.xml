@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="urn:commerceservicewsdl" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="urn:commerceservicewsdl" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
     <SOAP-ENV:Body>
         <ns1:getListCategoriesResponse>
-            <return SOAP-ENC:arrayType="ns1:Categorie[3]" xsi:type="ns1:ListeCategories">
-            </return>
+            <return SOAP-ENC:arrayType="ns1:Categorie[0]" xsi:type="ns1:ListeCategories"/>
         </ns1:getListCategoriesResponse>
     </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>

@@ -24,14 +24,12 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
                     }
                 }
             }
-            //var_dump($produits);
             return $produits;
-            
     }
 
     public function get($id)
     {
-        return $this->client->call('getProduitById', array($id), $this->path_xml_produit);
+        return $this->client->call('getProduitById', array($id), 'getProduitById');
     }
 
     public function add($obj)

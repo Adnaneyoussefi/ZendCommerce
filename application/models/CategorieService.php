@@ -17,7 +17,7 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
 
     public function get($id)
     {
-        return $this->client->call('getCategorieById', array($id), $this->name_xml);
+        return $this->client->call('getCategorieById', array($id), 'getCategorieById');
     }
 
     public function add($obj)

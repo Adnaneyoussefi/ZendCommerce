@@ -36,7 +36,8 @@ class IndexController extends Zend_Controller_Action
         $this->view->action = "Ajouter";
         //modification de produit
         if (isset($_GET['id'])) {
-            $this->view->produit = $this->commerceApiProduit->getModelById($_GET['id']);
+            $produit = $this->commerceApiProduit->getModelById($_GET['id']);
+            $this->view->produit = $produit;
             $this->view->action = "Modifier";
             if (isset($_POST['Modifier'])) {
                     session_start();

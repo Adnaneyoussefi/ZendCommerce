@@ -24,7 +24,7 @@
   </thead>
   <tbody style="background-color:#dadada;">
   <?php
-  if($this->info) {
+  if(isset($this->info)) {
   foreach ($this->info as $cat) :
 	echo "<tr>";
     echo "<tr>";
@@ -34,12 +34,14 @@
 	echo  "<td><a href='?idS=$cat->id' ><button type='button' class='btn btn-danger'>Supprimer</button></a></td>";
   echo "<td>";
   echo "<div style='vertical-align: top;text-align: center; display: inline;' >";
-  foreach($this->infoProd as $prod) :
-      if($prod->categorie->id == $cat->id) {
-        echo "<img src='$prod->image'  style='width:65px ; height:85px;' />";
-        echo "<div style='display:inline-block;' class='btn btn-link' data-toggle='modal' data-target='#exampleModal'>$prod->nom</div>";
-      }
-  endforeach;
+  if(isset($this->infoProd)) {
+    foreach($this->infoProd as $prod) :
+        if($prod->categorie->id == $cat->id) {
+          echo "<img src='$prod->image'  style='width:65px ; height:85px;' />";
+          echo "<div style='display:inline-block;' class='btn btn-link' data-toggle='modal' data-target='#exampleModal'>$prod->nom</div>";
+        }
+    endforeach;
+  }
 echo "<div>";
   echo "</td>";
   echo "</tr>";
@@ -48,7 +50,7 @@ echo "<div>";
   else {
 	?>
     <tr>
-      <td colspan="5">Aucune résultat</td>
+      <td colspan="5">Aucun résultat</td>
     </tr>
   <?php }?>
   </tbody>

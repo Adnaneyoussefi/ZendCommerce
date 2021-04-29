@@ -28,10 +28,14 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
     {
         $xml = file_get_contents($path_xml);
         $xml = simplexml_load_string($xml);
-        $data = $xml->xpath("//SOAP-ENV:Body/*/*")[0];
-        $arrayResult = json_decode(json_encode($data));
-        
         try {
+            $index = 0;
+            if(array_key_exists($index, $xml->xpath("//SOAP-ENV:Body/*/*")))
+                $data = $xml->xpath("//SOAP-ENV:Body/*/*")[$index];
+            else
+                throw new Zend_Exception('L\'index '.$index.' n\'existe pas dans le tableau.');
+            $arrayResult = json_decode(json_encode($data));
+        
             if(isset($arrayResult->item) && isset($arrayResult)) {
                 $arrayResult = $arrayResult->item;
             }

@@ -12,6 +12,7 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
         $this->path_xml_produit = 'getListProduits';
         $this->path_xml_categorie = 'getListCategories';
     }
+    
     public function getList()
     {
         $produits = $this->client->call('getListProduits', array(), $this->path_xml_produit);
@@ -19,8 +20,10 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
         if(isset($produits) && isset($categories))
             foreach ($produits as $p) {
                 foreach ($categories as $c) {
-                    if ($p->categorie->id === $c->id) {
-                        $p->categorie = $c;
+                    if(isset($p->categorie->id)) {
+                        if ($p->categorie->id == $c->id) {
+                            $p->categorie = $c;
+                        }
                     }
                 }
             }
@@ -49,4 +52,3 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
         return $this->client->call('deleteProduit', array($id), $this->path_xml_produit);
     }
 }
-

@@ -5,7 +5,7 @@ abstract class Application_Model_RessourceInterface
     public function __construct()
     {
         $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
-        $apikey = $config->getOption('apikey');
+        $apikey = $config->getOption('ws')['apikey'];
         $this->client = new Application_Model_CustomSoapClient($apikey);
     }
 

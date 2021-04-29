@@ -33,18 +33,30 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
         
         try {
             if(isset($arrayResult->item) && isset($arrayResult)) {
-                return $arrayResult->item;
+                $arrayResult = $arrayResult->item;
             }
             elseif(isset($arrayResult)) {
-                return $arrayResult;
+                $arrayResult = $arrayResult;
             }
             else {
                 throw new Zend_Exception('Le résultat est null');
             }
             
+            if(is_array($arrayResult)) {
+                $arrayResult = array_map(function($x) {
+                    foreach(array_keys(get_object_vars($x)) as $k)
+                        if(gettype($x->$k) == 'object' && $k !== 'categorie') {
+                            $x->$k = '';
+                        }
+                            
+                    return $x;    
+                }, $arrayResult);
+            }
+
+            return $arrayResult;
+            
         } catch(Zend_Exception $e) {
             echo $e->getMessage()." ";
         }
-        
     }
 }

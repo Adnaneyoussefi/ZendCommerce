@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="urn:commerceservicewsdl" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <SOAP-ENV:Body>
+        <ns1:getProduitByIdResponse>
+            <return xsi:type="ns1:Produit">
+                <id xsi:type="xsd:int">51</id>
+                <nom xsi:type="xsd:string">Hp</nom>
+                <description xsi:type="xsd:string">I7 7ème génération 8GB RAM 500GB</description>
+                <prix xsi:type="xsd:float">4500</prix>
+                <image xsi:type="xsd:string">https://e7.pngegg.com/pngimages/376/576/png-clipart-laptop-hewlett-packard-intel-hp-pavilion-gaming-computer-laptop-gadget-electronics.png</image>
+                <quantite xsi:type="xsd:int">65</quantite>
+                <categorie xsi:type="xsd:Categorie">
+                    <__initializer__ xsi:type="SOAP-ENC:Struct"/>
+                    <__cloner__ xsi:type="SOAP-ENC:Struct"/>
+                    <__isInitialized__ xsi:type="xsd:boolean">false</__isInitialized__>
+                    <id xsi:type="xsd:int">31</id>
+                    <nom xsi:nil="true"/>
+                    <produits xsi:nil="true"/>
+                </categorie>
+            </return>
+        </ns1:getProduitByIdResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

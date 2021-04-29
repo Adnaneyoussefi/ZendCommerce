@@ -36,6 +36,7 @@
   echo "<div style='vertical-align: top;text-align: center; display: inline;' >";
   if(isset($this->infoProd)) {
     foreach($this->infoProd as $prod) :
+      if(isset($prod->categorie->id))
         if($prod->categorie->id == $cat->id) {
           echo "<img src='$prod->image'  style='width:65px ; height:85px;' />";
           echo "<div style='display:inline-block;' class='btn btn-link' data-toggle='modal' data-target='#exampleModal'>$prod->nom</div>";

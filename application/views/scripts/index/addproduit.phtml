@@ -40,7 +40,9 @@
 		<div class="form-group">
 			<select name="categorie" class="custom-select">
 				<?php foreach ($this->categories as $c) {?>
-				<option value="<?=$c->id?>" <?=$this->produit->categorie ? $this->produit->categorie->id == $c->id ? 'selected' : "" : ''?>><?=$c->nom?></option>
+				<option value="<?=$c->id?>" 
+				<?=isset($this->produit->categorie) ? $this->produit->categorie->id == $c->id ? 'selected' : "" : ''?>>
+				<?=$c->nom?></option>
 				<?php }?>
 			</select>
 		</div>

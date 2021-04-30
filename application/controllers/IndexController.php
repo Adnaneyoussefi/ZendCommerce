@@ -23,8 +23,8 @@ class IndexController extends Zend_Controller_Action
     public function getProduitsAction()
     {
         session_start();
-        if(is_array($this->commerceApiProduit->getModels()))
-            $this->view->produits = array_reverse($this->commerceApiProduit->getModels());
+        //var_dump($this->commerceApiProduit->getModels());
+            $this->view->produits = $this->commerceApiProduit->getModels();
         if(isset($_SESSION['action']))
             $this->view->flashe = $_SESSION['action'];
         session_destroy();

@@ -1,18 +1,43 @@
 <?php
 
 class Application_Model_Categorie
-{
+{    
+    /**
+     * id
+     *
+     * @var int
+     */
     private $id;
-
+    
+    /**
+     * nom
+     *
+     * @var string
+     */
     private $nom;
-
+    
+    /**
+     * produits
+     *
+     * @var array
+     */
     private $produits = [];
-
+    
+    /**
+     * Récupérer l'Id du catégorie
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
-
+    
+    /**
+     * Récupérer le nom de catégorie
+     *
+     * @return string
+     */
     public function getNom()
     {
         return $this->nom;
@@ -24,7 +49,12 @@ class Application_Model_Categorie
 
         return $this;
     }
-
+    
+    /**
+     * Récupérer la liste des produits
+     *
+     * @return array|Application_Model_Produit[]
+     */
     public function getProduits()
     {
         return $this->produits;

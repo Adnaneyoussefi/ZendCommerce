@@ -1,28 +1,73 @@
 <?php
 
 class Application_Model_Produit
-{
+{    
+    /**
+     * id
+     *
+     * @var int
+     */
     private $id;
-
+    
+    /**
+     * nom
+     *
+     * @var string
+     */
     private $nom;
-
+    
+    /**
+     * description
+     *
+     * @var string
+     */
     private $description;
-
+    
+    /**
+     * prix
+     *
+     * @var float
+     */
     private $prix;
-
+    
+    /**
+     * image
+     *
+     * @var string
+     */
     private $image;
-
+    
+    /**
+     * quantite
+     *
+     * @var int
+     */
     private $quantite;
-
+    
+    /**
+     * categorie
+     *
+     * @var Application_Model_Categorie
+     */
     private $categorie;
 
     private $client;
-
+    
+    /**
+     * Récupérer l'Id du produit
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
-
+    
+    /**
+     * Récupérer l'Id du produit
+     *
+     * @return string
+     */
     public function getNom()
     {
         return $this->nom;
@@ -82,7 +127,12 @@ class Application_Model_Produit
 
         return $this;
     }
-
+    
+    /**
+     * Récupérer la catégorie du produit
+     *
+     * @return Application_Model_Categorie
+     */
     public function getCategorie()
     {
         return $this->categorie;

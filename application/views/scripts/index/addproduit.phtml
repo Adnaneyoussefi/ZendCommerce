@@ -1,8 +1,10 @@
+
 <div class="container mt-5">
 <div class="alert alert-warning collapse" id="cannot">
  Attention Categorie associe à un produit !!
 </div>
-	<form method="post" id="form">
+<?php echo $this->form ?>
+<!--	<form method="post" id="form">
 		<div class="form-group">
 			<label for="nom">Nom</label>
 			<input id="inputNom" value="<?=$this->produit->nom?>" name="nom" type="text" class="form-control" aria-describedby="nom" placeholder="Entrez nom">
@@ -49,4 +51,8 @@
 			<a href="<?=$this->url(array('action' => 'get-produits'))?>" class="btn btn-outline-success">Retour à la liste</a>
 		</div>
 	</form>
+	-->
+	<div class="form-group">
+			<a href="<?=$this->url(array('action' => 'get-produits'))?>" class="btn btn-outline-success">Retour à la liste</a>
+		</div>
 </div>

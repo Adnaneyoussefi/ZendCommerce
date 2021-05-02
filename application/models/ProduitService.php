@@ -49,13 +49,23 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
     /**
      * Ajouter un produit
      *
-     * @param  array $obj
+     * @param  array $arr
      * @return object
      */
-    public function add($obj)
+    public function add($arr)
     {
-        $array = [$obj['nom'], $obj['description'], $obj['prix'], '', $obj['quantite'], $obj['categorie']];
-        return $this->client->call('addNewProduit', $array, $this->path_xml_produit);
+        $array = [];
+        $indexes = ['nom', 'description', 'prix', 'quantite', 'categorie'];
+        foreach($indexes as $key => $value) {
+            if(!array_key_exists($value, $arr))
+                throw new Zend_Exception('L\'index "'.$value.'" n\'existe pas dans le tableau.');
+            if($key == 3)
+                array_push($array, '');
+            array_push($array, $arr[$value]);
+        }
+        $response = $this->client->call('addNewProduit', $array, $this->path_xml_produit);
+        if($response->code != 201)
+            throw new Zend_Exception('Impossible d\'ajouter le produit !');
     }
     
     /**
@@ -79,6 +89,6 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
      */
     public function delete($id)
     {
-        return $this->client->call('deleteProduit', array($id), $this->path_xml_produit);
+        $response = $this->client->call('deleteProduit', array($id), $this->path_xml_produit);   
     }
 }

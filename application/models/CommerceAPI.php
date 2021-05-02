@@ -10,7 +10,7 @@ class Application_Model_CommerceAPI
     }
     
     /**
-
+     *
      * @return array
      */
     public function getModels() {
@@ -54,4 +54,3 @@ class Application_Model_CommerceAPI
         return $this->ressourceInterface->delete($id);
     }
 }
-

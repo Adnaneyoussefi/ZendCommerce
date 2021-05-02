@@ -58,21 +58,24 @@ class IndexController extends Zend_Controller_Action
         } else {
             //Ajout de produit
             if (isset($_POST['Ajouter'])) {
-                session_start();
-                $_SESSION['action'] = 'ajouter';
-                if (empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['prix']) || empty($_POST['quantite'])) {
-                    echo "<script>$('#inc').show();</script>";
-                } else if (!is_numeric($_POST['prix'])) {
-                    echo "<script>$('#prix').show();</script>";
-                } else if (!is_numeric($_POST['quantite'])) {
-                    echo "<script>$('#quantite').show();</script>";
-                } else {
-                    $this->commerceApiProduit->addModel($_POST);
-
-                    header("HTTP/1.1 201 OK");
-                    $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+                try{
+                    session_start();
+                    $_SESSION['action'] = 'ajouter';
+                    if (empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['prix']) || empty($_POST['quantite'])) {
+                        echo "<script>$('#inc').show();</script>";
+                    } else if (!is_numeric($_POST['prix'])) {
+                        echo "<script>$('#prix').show();</script>";
+                    } else if (!is_numeric($_POST['quantite'])) {
+                        echo "<script>$('#quantite').show();</script>";
+                    } else { 
+                        $this->commerceApiProduit->addModel($_POST);
+                        header("HTTP/1.1 201 OK");
+                        $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+                    }
+                } catch(Zend_Exception $e) {
+                    echo $e->getMessage();
+                }
             }
-        }
         }
     }
 
@@ -89,29 +92,32 @@ class IndexController extends Zend_Controller_Action
     public function categorieAction()
     {
         //supression de catégorie
-        if (isset($_GET['idS'])) {
-            try {
-                $this->commerceApiCategorie->deleteModelById($_GET['idS']);
-                echo "<script>$('#supp').show();</script>";
-            } catch (Exception $e) {
-                echo "<script>$('#cannot').show();</script>";
+        try {
+            if (isset($_GET['idS'])) {
+                $response = $this->commerceApiCategorie->deleteModelById($_GET['idS']);
+                if($response->code != '200')
+                    throw new Application_Model_ExceptionMessage($response->msg, $response->code);
+                $this->view->delete = 'Catégorie supprimé avec succés';   
             }
-        }
-        //modification et l'ajout
-        else if (isset($_POST['nom']) && empty($_POST['id'])) {
-            try {
-                $this->view->info = $this->commerceApiCategorie->addModel($_POST);
-                echo "<script>$('#aj').show();</script>";
-            } catch (Exception $e) {
-
-            }
-        } else if (isset($_POST['nom']) && isset($_POST['id'])) {
-            $this->view->info = $this->commerceApiCategorie->updateModelById($_POST['id'], $_POST);
-            echo "<script>$('#mod').show();</script>";
-        }
-        //affichage listes des catégories
-        $this->view->info = $this->commerceApiCategorie->getModels();
-        $this->view->infoProd = $this->commerceApiProduit->getModels();
+            //modification et l'ajout
+            else if (isset($_POST['nom']) && empty($_POST['id'])) {
+                    $response = $this->commerceApiCategorie->addModel($_POST);
+                    if($response->code != '201')
+                        throw new Application_Model_ExceptionMessage($response->msg, $response->code);
+                    $this->view->add = 'Categorie a été ajouté';
+            } else if (isset($_POST['nom']) && isset($_POST['id'])) {
+                
+                    $response = $this->commerceApiCategorie->updateModelById($_POST['id'], $_POST);
+                    if($response->code != '200')
+                        throw new Application_Model_ExceptionMessage($response->msg, $response->code);
+                    $this->view->update = 'Categorie a été modifié';
+                }
+            //affichage listes des catégories
+            $this->view->info = $this->commerceApiCategorie->getModels();
+            $this->view->infoProd = $this->commerceApiProduit->getModels();
+        } catch (Application_Model_ExceptionMessage $e) {
+            $this->view->error = $e->getMessage();
+        }  
     }
 
     public function modifierAction()

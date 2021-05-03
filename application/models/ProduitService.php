@@ -64,8 +64,7 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
             array_push($array, $arr[$value]);
         }
         $response = $this->client->call('addNewProduit', $array, $this->path_xml_produit);
-        if($response->code != 201)
-            throw new Zend_Exception('Impossible d\'ajouter le produit !');
+        return $response;
     }
     
     /**
@@ -90,5 +89,6 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
     public function delete($id)
     {
         $response = $this->client->call('deleteProduit', array($id), $this->path_xml_produit);   
+        return $response;
     }
 }

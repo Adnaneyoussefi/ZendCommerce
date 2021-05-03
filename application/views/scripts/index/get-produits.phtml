@@ -1,17 +1,18 @@
 <div class="container-fluid mt-5">
-    <?php if($this->flashe === 'supprimer') { ?>
-    <div class="alert alert-danger collapse" style="display: block;">
-    Le produit a été supprimé
+<?php $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger'); ?>
+    <?php if ($flashMessenger->hasMessages('success')): ?>
+    <div class="alert alert-success">
+        <?php foreach ($flashMessenger->getMessages('success') as $msg): ?>
+            <?php echo $msg ?>
+        <?php endforeach; ?>
     </div>
-    <?php } elseif($this->flashe === 'ajouter') { ?>
-    <div class="alert alert-success collapse" style="display: block;">
-    Le produit a été ajouté
-    </div>
-    <?php } elseif($this->flashe === 'modifier') { ?>
-    <div class="alert alert-warning collapse" style="display: block;">
-    Le produit a été modifié
-    </div>
-    <?php } ?>
+    <?php endif; if ($flashMessenger->hasMessages('error')): ?>
+        <div class="alert alert-danger">
+            <?php foreach ($flashMessenger->getMessages('error') as $msg): ?>
+                <?php echo $msg ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
     
     <a href="<?=$this->url(array('action'=>'addproduit'))?>" class="btn btn-primary mb-3">Ajouter un produit</a>
 
@@ -52,7 +53,7 @@
         <tr>
             <td colspan="8">Aucun résultat</td>
         </tr>
-        <?php } include("deleteAlert.phtml"); ?>
+        <?php } include("deleteproduit.phtml"); ?>
         </tbody>
     </table>    
 </div>

@@ -3,16 +3,16 @@
     <SOAP-ENV:Body>
         <ns1:getCategorieByIdResponse>
             <return id="ref1" xsi:type="ns1:Categorie">
-                <id xsi:type="xsd:int">1</id>
-                <nom xsi:type="xsd:string">Tele</nom>
+                <id xsi:type="xsd:int">31</id>
+                <nom xsi:type="xsd:string">Téléphone</nom>
                 <produits SOAP-ENC:arrayType="ns1:Produit[1]" xsi:type="ns1:ListeProduits">
                     <item xsi:type="ns1:Produit">
-                        <id xsi:type="xsd:int">19</id>
-                        <nom xsi:type="xsd:string">Sumsung Galaxy A02S</nom>
-                        <description xsi:type="xsd:string">4GB RAM 60GB</description>
-                        <prix xsi:type="xsd:float">1400</prix>
-                        <image xsi:type="xsd:string">https://evotrading.ma/wp-content/uploads/2021/02/smartphone-samsung-galaxy-a02s-4gb-64go-rouge-sm-a025fzrfmwd.png</image>
-                        <quantite xsi:type="xsd:int">32</quantite>
+                        <id xsi:type="xsd:int">51</id>
+                        <nom xsi:type="xsd:string">Hp</nom>
+                        <description xsi:type="xsd:string">I7 7ème génération 8GB RAM 500GB</description>
+                        <prix xsi:type="xsd:float">4500</prix>
+                        <image xsi:type="xsd:string">https://e7.pngegg.com/pngimages/376/576/png-clipart-laptop-hewlett-packard-intel-hp-pavilion-gaming-computer-laptop-gadget-electronics.png</image>
+                        <quantite xsi:type="xsd:int">65</quantite>
                         <categorie href="#ref1" xsi:type="xsd:Categorie"/>
                     </item>
                 </produits>

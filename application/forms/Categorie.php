@@ -16,13 +16,6 @@ class Application_Form_Categorie extends Zend_Form
         $nom->setAttrib('placeholder', 'nom de la catégorie');
         $nom->setAttrib('name', 'nom');
         $nom->setAttrib('class', 'form-control');
-         // set the validators
-         $nom->setValidators(array(
-            new Zend_Validate_Alpha(true),
-            new Zend_Validate_StringLength(
-                array("min" => 3, "max" => 50))
-        ));
-        $nom->setRequired();
 
         $id = new Zend_Form_Element_Hidden('idCat');
         $id->setAttrib('id', 'categorie_nom');

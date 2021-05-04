@@ -29,7 +29,9 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach($this->produits as $p) { ?>
+        <?php
+        if(isset($this->produits)) {
+        foreach($this->produits as $p) { ?>
             <tr class="table-active">
                 <th scope="row"><?=$p->id?></th>
                 <th><img src="<?=$p->image?>" max-width="200px" height="100px"></img></th>
@@ -37,14 +39,20 @@
                 <td><?=$p->description?></td>
                 <td><?=$p->prix?> MAD</td>
                 <td><?=$p->quantite?></td>
-                <td><?=$p->categorie->nom?></td>
+                <td><?=isset($p->categorie->nom) ? $p->categorie->nom : ''?></td>
                 <td> 
                 <a href="<?=$this->url(array('action'=>'addproduit'))?>?id=<?=$p->id?>" class="btn btn-warning">Modifier</a>
                 <a class="btn btn-danger deleteProduct" value="<?=$p->id?>" data-toggle="modal" data-target="#deleteModal">Supprimer</a>
                 </td>
             </tr>
-        <?php } ?>
-        <?php include("deleteAlert.phtml"); ?>
+        <?php }
+        }
+        else {
+        ?>
+        <tr>
+            <td colspan="8">Aucun résultat</td>
+        </tr>
+        <?php } include("deleteAlert.phtml"); ?>
         </tbody>
     </table>    
 </div>

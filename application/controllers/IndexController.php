@@ -23,17 +23,22 @@ class IndexController extends Zend_Controller_Action
     public function getProduitsAction()
     {
         session_start();
-        $this->view->produits = array_reverse($this->commerceApiProduit->getModels());
-        $this->view->flashe = $_SESSION['action'];
+        //var_dump($this->commerceApiProduit->getModels());
+        $this->view->produits = $this->commerceApiProduit->getModels();
+        if (isset($_SESSION['action'])) {
+            $this->view->flashe = $_SESSION['action'];
+        }
+
         session_destroy();
     }
 
     public function addproduitAction()
     {
         //modification de produit
-        if (isset($_GET['id'])) {
+        if ($this->_request->getQuery('id')) {
+
             $form = new Application_Form_Produit();
-            $prod = $this->commerceApiProduit->getModelById($_GET['id']);
+            $prod = $this->commerceApiProduit->getModelById($this->_request->getQuery('id'));
             $cat = $this->commerceApiCategorie->getModels();
             $action = "Modifier";
             $returnNom = array();
@@ -47,40 +52,22 @@ class IndexController extends Zend_Controller_Action
             $data = array('NomProduit' => $prod->nom, 'DescProduit' => $prod->description, 'PrixProduit' => $prod->prix, 'QuantiteProduit' => $prod->quantite);
             $form->setDefaults($data);
             $form->getElement('Ajouter')->setAttrib("name", $action);
-            $this->view->form = $form->render($view);
+            $this->view->form = $form->render();
 
-            if (isset($_POST['Modifier'])) {
+            if ($this->_request->getPost('Modifier')) {
                 session_start();
                 $_SESSION['action'] = 'modifier';
-                if (empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['prix']) || empty($_POST['quantite'])) {
-                    echo "<script>$('#inc').show();</script>";
-                } else if (!is_numeric($_POST['prix'])) {
-                    echo "<script>$('#prix').show();</script>";
-                } else if (!is_numeric($_POST['quantite'])) {
-                    echo "<script>$('#quantite').show();</script>";
-                } else {
-                    $this->commerceApiProduit->updateModelById($_GET['id'], $_POST);
-
-                    $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-                }
+                $this->commerceApiProduit->updateModelById($this->_request->getQuery('id'), $_POST);
+                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
             }
         } else
         //Ajout de produit
-        if (isset($_POST['Ajouter'])) {
+        if ($this->_request->getPost('Ajouter')) {
             session_start();
             $_SESSION['action'] = 'ajouter';
-            if (empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['prix']) || empty($_POST['quantite'])) {
-                echo "<script>$('#inc').show();</script>";
-            } else if (!is_numeric($_POST['prix'])) {
-                echo "<script>$('#prix').show();</script>";
-            } else if (!is_numeric($_POST['quantite'])) {
-                echo "<script>$('#quantite').show();</script>";
-            } else {
-                $this->commerceApiProduit->addModel($_POST);
-
-                header("HTTP/1.1 201 OK");
-                $this->r->gotoUrl('index/get-produits')->redirectAndExit();
-            }
+            $this->commerceApiProduit->addModel($_POST);
+            header("HTTP/1.1 201 OK");
+            $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         } else {
 
             $action = "Ajouter";
@@ -94,18 +81,18 @@ class IndexController extends Zend_Controller_Action
                 ->setConfig(new Zend_Config(array(
                     'multiOptions' => $returnNom)
                 ));
-            $form->getElement('Ajouter')->setAttrib("name", $this->action);
-            $this->view->form = $form->render($view);
+            $form->getElement('Ajouter')->setAttrib("name", $action);
+            $this->view->form = $form->render();
 
         }
     }
 
     public function deleteproduitAction()
     {
-        if ($this->getRequest()->isGet()) {
+        if ($this->_request->getQuery('id')) {
             session_start();
             $_SESSION['action'] = 'supprimer';
-            $this->commerceApiProduit->deleteModelById($_GET['id']);
+            $this->commerceApiProduit->deleteModelById($this->_request->getQuery('id'));
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         }
     }
@@ -114,9 +101,9 @@ class IndexController extends Zend_Controller_Action
     {
 
         //supression de catégorie
-        if ($this->getRequest()->isGet()) {
+        if ($this->_request->getQuery('idS')) {
             try {
-                $this->commerceApiCategorie->deleteModelById($_GET['idS']);
+                $this->commerceApiCategorie->deleteModelById($this->_request->getQuery('idS'));
                 echo "<script>$('#supp').show();</script>";
             } catch (Exception $e) {
                 echo "<script>$('#cannot').show();</script>";
@@ -124,15 +111,15 @@ class IndexController extends Zend_Controller_Action
         }
 
         //modification et l'ajout
-        else if (isset($_POST['nom']) && empty($_POST['id'])) {
+        else if ($this->_request->getPost('nom') && empty($this->_request->getPost('id'))) {
             try {
                 $this->view->info = $this->commerceApiCategorie->addModel($_POST);
                 echo "<script>$('#aj').show();</script>";
             } catch (Exception $e) {
 
             }
-        } else if (isset($_POST['nom']) && isset($_POST['id'])) {
-            $this->view->info = $this->commerceApiCategorie->updateModelById($_POST['id'], $_POST);
+        } else if ($this->_request->getPost('nom') && $this->_request->getPost('id')) {
+            $this->view->info = $this->commerceApiCategorie->updateModelById($this->_request->getPost('id'), $_POST);
             echo "<script>$('#mod').show();</script>";
         }
         //affichage listes des catégories
@@ -142,18 +129,21 @@ class IndexController extends Zend_Controller_Action
 
     public function modifierAction()
     {
-
-        if ($this->getRequest()->isGet()) {
+        $form = new Application_Form_Categorie();
+        if ($this->_request->getQuery('idM')) {
             try {
-                $form = new Application_Form_Categorie();
-                $a = $this->commerceApiCategorie->getModelById($_GET['idM']);
+                $a = $this->commerceApiCategorie->getModelById($this->_request->getQuery('idM'));
                 $data = array('NomCategorie' => $a->nom, 'idCat' => $a->id);
                 $form->setDefaults($data);
-                $this->view->form = $form->render($view);
+                if (isset($view)) {
+                    $this->view->form = $form->render($view);
+                }
+
             } catch (Exception $e) {
 
             }
         }
-        $this->view->form = $form->render($view);
+        $this->view->form = $form->render();
+
     }
 }

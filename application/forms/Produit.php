@@ -9,7 +9,6 @@ class Application_Form_Produit extends Zend_Form
         $this->setMethod('post');
         $this->setAttrib('id', 'form');
 
-
         $nom = new Zend_Form_Element_Text('NomProduit');
         $nom->setLabel('Nom du Produit')
             ->setRequired(true)
@@ -19,12 +18,12 @@ class Application_Form_Produit extends Zend_Form
             ->setAttrib('class', 'form-control');
 
         $desc = new Zend_Form_Element_Text('DescProduit');
-        $desc->setLabel('la description');
-        $desc->setRequired(true);
-        $desc->setAttrib('id', 'inputDesc');
-        $desc->setAttrib('placeholder', 'Description');
-        $desc->setAttrib('name', 'description');
-        $desc->setAttrib('class', 'form-control');
+        $desc->setLabel('la description')
+            ->setRequired(true)
+            ->setAttrib('id', 'inputDesc')
+            ->setAttrib('placeholder', 'Description')
+            ->setAttrib('name', 'description')
+            ->setAttrib('class', 'form-control');
 
         $prix = new Zend_Form_Element_Text('PrixProduit');
         $prix->setLabel('le prix');

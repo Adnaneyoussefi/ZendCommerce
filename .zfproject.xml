@@ -33,6 +33,7 @@
         <modelFile modelName="Produit"/>
         <modelFile modelName="ProduitService"/>
         <modelFile modelName="CustomSoapClient"/>
+        <modelFile modelName="ExceptionMessage"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory>

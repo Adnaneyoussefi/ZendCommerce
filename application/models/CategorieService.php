@@ -63,6 +63,7 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
      */
     public function delete($id)
     {
-        return $this->client->call('deleteCategorie', array($id), $this->name_xml);
+        $response = $this->client->call('deleteCategorie', array($id), $this->name_xml);
+        return $response;   
     }
 }

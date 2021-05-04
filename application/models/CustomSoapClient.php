@@ -23,8 +23,7 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
                 $result = parent::__call($function_name, $arguments);
             }
             return $result;
-        } catch(Zend_Exception $e) {
-            echo $e->getMessage();
+        } catch(\Exception $e) {
         }
     }
     

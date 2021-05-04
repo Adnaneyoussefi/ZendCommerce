@@ -9,9 +9,11 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
+        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $apikey = $config->getOption('ws')['apikey'];
         $this->r = new Zend_Controller_Action_Helper_Redirector;
-        $categorieService = new Application_Model_CategorieService();
-        $produitService = new Application_Model_ProduitService();
+        $categorieService = new Application_Model_CategorieService($apikey);
+        $produitService = new Application_Model_ProduitService($apikey);
         $this->commerceApiCategorie = new Application_Model_CommerceAPI($categorieService);
         $this->commerceApiProduit = new Application_Model_CommerceAPI($produitService);
         $this->_flashMessenger = $this->_helper
@@ -25,8 +27,12 @@ class IndexController extends Zend_Controller_Action
 
     public function getProduitsAction()
     {
-        $this->view->produits = $this->commerceApiProduit->getModels();
-        $this->view->message = $this->_flashMessenger->getMessages();
+        try {
+            $this->view->produits = $this->commerceApiProduit->getModels();
+            $this->view->message = $this->_flashMessenger->getMessages();
+        } catch (\Exception $e) {
+            $this->_flashMessenger->addMessage($e->getMessage(), 'error');
+        }
     }
 
     public function addproduitAction()

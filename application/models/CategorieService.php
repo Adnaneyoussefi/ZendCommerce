@@ -1,13 +1,11 @@
 <?php
 
-class Application_Model_CategorieService extends Application_Model_RessourceInterface
-{
-    private $name_xml = "";
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->name_xml = 'getListCategories';
+class Application_Model_CategorieService extends Application_Model_CustomSoapClient implements Application_Model_RessourceInterface
+{    
+    
+    public function __construct($apikey)
+    {   
+        parent::__construct($apikey);
     }
     
     /**
@@ -17,7 +15,8 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
      */
     public function getList()
     {   
-        $categories = $this->client->call('getListCategories', array(), $this->name_xml);
+        $this->ws_name = 'getListCategories';
+        $categories = $this->__call('getListCategories', array());
         return $categories;
     }
     
@@ -29,7 +28,8 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
      */
     public function get($id)
     {
-        return $this->client->call('getCategorieById', array($id), 'getCategorieById');
+        $this->ws_name = 'getCategorieById';
+        return $this->__call('getCategorieById', array($id));
     }
     
     /**
@@ -40,7 +40,7 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
      */
     public function add($arr)
     {
-        return $this->client->call('addNewCategorie', array($arr['nom']), $this->name_xml);
+        return $this->__call('addNewCategorie', array($arr['nom']));
     }
     
     /**
@@ -52,7 +52,7 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
      */
     public function update($id, $arr)
     {
-        return $this->client->call('updateCategorie', array($id, $arr['nom']), $this->name_xml);
+        return $this->__call('updateCategorie', array($id, $arr['nom']));
     }
     
     /**
@@ -63,7 +63,7 @@ class Application_Model_CategorieService extends Application_Model_RessourceInte
      */
     public function delete($id)
     {
-        $response = $this->client->call('deleteCategorie', array($id), $this->name_xml);
+        $response = $this->__call('deleteCategorie', array($id));
         return $response;   
     }
 }

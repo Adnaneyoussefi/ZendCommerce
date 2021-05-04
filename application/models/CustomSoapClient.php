@@ -2,7 +2,9 @@
 
 class Application_Model_CustomSoapClient extends Zend_Soap_Client
 {
-    public function call($function_name, $arguments, $ws_name)
+    protected $ws_name;
+
+    public function __call($function_name, $arguments)
     {
         try {
             $result = [];
@@ -12,18 +14,19 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
                 $xml_path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
                 .DIRECTORY_SEPARATOR.$bouchon['directory']
                 .DIRECTORY_SEPARATOR.$bouchon['active_uc']
-                .DIRECTORY_SEPARATOR.$ws_name.'.xml';
+                .DIRECTORY_SEPARATOR.$this->ws_name.'.xml';
 
                 if(file_exists($xml_path))
                     $result = $this->convertResponseXML($xml_path);
                 else
-                    throw new Zend_Exception("Le fichier ".$xml_path." n'existe pas");
+                    throw new Exception("Le fichier ".$xml_path." n'existe pas");
 
             } else {
                 $result = parent::__call($function_name, $arguments);
             }
             return $result;
         } catch(\Exception $e) {
+            var_dump($e->getMessage());
         }
     }
     
@@ -58,7 +61,7 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
                         $arrayResult = $data;
                     }
                     else
-                        throw new Zend_Exception('Le résultat est null');
+                        throw new Exception('Le résultat est null');
                 } 
             }
             else {
@@ -69,7 +72,7 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
             //var_dump($arrayResult);
             return $arrayResult;
             
-        } catch(Zend_Exception $e) {
+        } catch(Exception $e) {
             echo $e->getMessage()." ";
         }
     }

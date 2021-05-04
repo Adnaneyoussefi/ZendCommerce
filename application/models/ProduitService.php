@@ -1,16 +1,11 @@
 <?php
 
-class Application_Model_ProduitService extends Application_Model_RessourceInterface
+class Application_Model_ProduitService extends Application_Model_CustomSoapClient implements Application_Model_RessourceInterface
 {
-    private $path_xml_produit = "";
-
-    private $path_xml_categorie = "";
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->path_xml_produit = 'getListProduits';
-        $this->path_xml_categorie = 'getListCategories';
+    
+    public function __construct($apikey)
+    {   
+        parent::__construct($apikey);
     }
         
     /**
@@ -20,8 +15,10 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
      */
     public function getList()
     {
-        $produits = $this->client->call('getListProduits', array(), $this->path_xml_produit);
-        $categories = $this->client->call('getListCategories', array(), $this->path_xml_categorie);
+        $this->ws_name = 'getListProduits';
+        $produits = $this->__call('getListProduits', array());
+        $this->ws_name = 'getListCategories';
+        $categories = $this->__call('getListCategories', array());
         if(isset($produits) && isset($categories))
             foreach ($produits as $p) {
                 foreach ($categories as $c) {
@@ -43,7 +40,8 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
      */
     public function get($id)
     {
-        return $this->client->call('getProduitById', array($id), 'getProduitById');
+        $this->ws_name = 'getProduitById';
+        return $this->__call('getProduitById', array($id));
     }
     
     /**
@@ -63,7 +61,7 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
                 array_push($array, '');
             array_push($array, $arr[$value]);
         }
-        $response = $this->client->call('addNewProduit', $array, $this->path_xml_produit);
+        $response = $this->__call('addNewProduit', $array);
         return $response;
     }
     
@@ -77,7 +75,7 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
     public function update($id, $obj)
     {
         $array = [$id, $obj['nom'], $obj['description'], $obj['prix'], '', $obj['quantite'], $obj['categorie']];
-        return $this->client->call('updateProduit', $array, $this->path_xml_produit);
+        return $this->__call('updateProduit', $array);
     }
     
     /**
@@ -88,7 +86,7 @@ class Application_Model_ProduitService extends Application_Model_RessourceInterf
      */
     public function delete($id)
     {
-        $response = $this->client->call('deleteProduit', array($id), $this->path_xml_produit);   
+        $response = $this->__call('deleteProduit', array($id));   
         return $response;
     }
 }

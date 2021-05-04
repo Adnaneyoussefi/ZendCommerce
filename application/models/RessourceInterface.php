@@ -1,22 +1,15 @@
 <?php
 
-abstract class Application_Model_RessourceInterface
+interface Application_Model_RessourceInterface
 {
-    public function __construct()
-    {
-        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
-        $apikey = $config->getOption('ws')['apikey'];
-        $this->client = new Application_Model_CustomSoapClient($apikey);
-    }
+    public function getList();
 
-    abstract public function getList();
+    public function get($id);
 
-    abstract public function get($id);
+    public function add($obj);
 
-    abstract public function add($obj);
+    public function update($id, $obj);
 
-    abstract public function update($id, $obj);
-
-    abstract public function delete($id);
+    public function delete($id);
 }
 

@@ -9,9 +9,11 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
+        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $apikey = $config->getOption('ws')['apikey'];
         $this->r = new Zend_Controller_Action_Helper_Redirector;
-        $categorieService = new Application_Model_CategorieService();
-        $produitService = new Application_Model_ProduitService();
+        $categorieService = new Application_Model_CategorieService($apikey);
+        $produitService = new Application_Model_ProduitService($apikey);
         $this->commerceApiCategorie = new Application_Model_CommerceAPI($categorieService);
         $this->commerceApiProduit = new Application_Model_CommerceAPI($produitService);
         $this->_flashMessenger = $this->_helper
@@ -25,18 +27,12 @@ class IndexController extends Zend_Controller_Action
 
     public function getProduitsAction()
     {
-        session_start();
-        //var_dump($this->commerceApiProduit->getModels());
-        $this->view->produits = $this->commerceApiProduit->getModels();
-        if (isset($_SESSION['action'])) {
-            $this->view->flashe = $_SESSION['action'];
+        try {
+            $this->view->produits = $this->commerceApiProduit->getModels();
+            $this->view->message = $this->_flashMessenger->getMessages();
+        } catch (\Exception $e) {
+            $this->_flashMessenger->addMessage($e->getMessage(), 'error');
         }
-
-        session_destroy();
-
-        $this->view->produits = $this->commerceApiProduit->getModels();
-        $this->view->message = $this->_flashMessenger->getMessages();
-
     }
 
     public function addproduitAction()
@@ -139,8 +135,8 @@ class IndexController extends Zend_Controller_Action
         } catch (Application_Model_ExceptionMessage $e) {
             $this->_flashMessenger->addMessage($e->getMessage(), 'error');
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
->>>>>>> 8b01f0fa8b24d38551277b0b606f740da4c594a2
         }
+    }
     }
 
     public function deleteproduitAction()
@@ -162,11 +158,11 @@ class IndexController extends Zend_Controller_Action
             }
         } catch (Application_Model_ExceptionMessage $e) {
             $this->_flashMessenger->setNamespace('error')->addMessage($e->getMessage(), 'error');
->>>>>>> 8b01f0fa8b24d38551277b0b606f740da4c594a2
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         }
     }
-
+    }
+    
     public function categorieAction()
     {
 

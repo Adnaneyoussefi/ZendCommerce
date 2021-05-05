@@ -39,6 +39,7 @@ class Application_Form_Produit extends Zend_Form
         $quantite->setAttrib('placeholder', 'Quantite');
         $quantite->setAttrib('name', 'quantite');
         $quantite->setAttrib('class', 'form-control');
+        $quantite->setRequired(true);
 
         $cat = new Zend_Form_Element_Select('_Categorie');
         $cat->setLabel('categorie');

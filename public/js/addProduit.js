@@ -4,10 +4,10 @@ $(document).ready(() => {
       }
     $('#form').submit((e) => {
         $bool = true;
-        var nom = document.forms["form"]["nom"];
-        var desc = document.forms["form"]["description"];
-        var prix = document.forms["form"]["prix"];
-        var quantite = document.forms["form"]["quantite"];
+        var nom = document.forms["form"]["nomProd"];
+        var desc = document.forms["form"]["descriptionProd"];
+        var prix = document.forms["form"]["prixProd"];
+        var quantite = document.forms["form"]["quantiteProd"];
 
         if (nom.value == "") {
             $('#nom').show();

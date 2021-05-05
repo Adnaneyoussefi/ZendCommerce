@@ -1,17 +1,8 @@
+
 <div class="container">
-
 <br><br>
-
-<form method="post" action="categorie" id="formCat">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Nom de la Categorie</label>
-    <input id="categorie_nom" type="text" class="form-control" placeholder="nom de la catégorie" name="nom"  value="<?php if (isset($this->catModif) && !empty($this->catModif)) {echo $this->catModif->nom;}?>">
-  <br>  <div class="alert alert-danger collapse" id="catN">
-  Remplir categorie
-</div>
-  <input type="hidden" class="form-control" name="id"  value="<?php if (isset($this->catModif) && !empty($this->catModif)) {echo $this->catModif->id;}?>">
-  </div>
-  <br>
-  <button type="submit" class="btn btn-primary">Ajouter</button>
-</form>
+<?php echo $this->form ?>
+<div class="form-group">
+			<a href="<?=$this->url(array('action' => 'categorie'))?>" class="btn btn-outline-success">Retour à la liste</a>
+		</div>
 </div>

@@ -3,7 +3,14 @@
 class Application_Model_CustomSoapClient extends Zend_Soap_Client
 {
     protected $ws_name;
-
+    
+    /**
+     * __call
+     *
+     * @param  mixed $function_name
+     * @param  mixed $arguments
+     * @return void
+     */
     public function __call($function_name, $arguments)
     {
         try {
@@ -71,7 +78,7 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
             //var_dump($soap->getListProduits());
             //var_dump($arrayResult);
             return $arrayResult;
-            
+
         } catch(Exception $e) {
             echo $e->getMessage()." ";
         }

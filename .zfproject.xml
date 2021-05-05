@@ -23,7 +23,10 @@
           <actionMethod actionName="index"/>
         </controllerFile>
       </controllersDirectory>
-      <formsDirectory enabled="false"/>
+      <formsDirectory>
+        <formFile formName="Categorie"/>
+        <formFile formName="Produit"/>
+      </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
         <modelFile modelName="Categorie"/>

@@ -40,7 +40,9 @@ class Application_Model_CategorieService extends Application_Model_CustomSoapCli
      */
     public function add($arr)
     {
-        return $this->__call('addNewCategorie', array($arr['nom']));
+        $indexes = ['nom'];
+        $response = $this->__call('addNewCategorie', $this->checkArray($indexes, $arr));
+        return $response;
     }
     
     /**
@@ -52,7 +54,8 @@ class Application_Model_CategorieService extends Application_Model_CustomSoapCli
      */
     public function update($id, $arr)
     {
-        return $this->__call('updateCategorie', array($id, $arr['nom']));
+        $indexes = ['nom'];
+        return $this->__call('updateCategorie', $this->checkArray($indexes, $arr, $id));
     }
     
     /**
@@ -65,5 +68,31 @@ class Application_Model_CategorieService extends Application_Model_CustomSoapCli
     {
         $response = $this->__call('deleteCategorie', array($id));
         return $response;   
+    }
+    
+    /**
+     * Vérifier si les indexes existe dans le tableau
+     *
+     * @param  array $indexes
+     * @param  array $arr
+     * @param  int|null $id
+     * @return array
+     * @throws Application_Model_ExceptionMessage
+     */
+    public function checkArray($indexes, $arr, $id = null)
+    {
+        $tab = [];
+        if(isset($id))
+            array_push($tab, $id);
+        foreach($indexes as $value)
+        {
+            if(isset($arr[$value]))
+            {
+                array_push($tab, $arr[$value]);
+            }
+            else
+                throw new Application_Model_ExceptionMessage("L'index '".$value."' n'existe pas dans le tableau", "T-400");
+        }
+        return $tab;
     }
 }

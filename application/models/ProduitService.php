@@ -52,16 +52,8 @@ class Application_Model_ProduitService extends Application_Model_CustomSoapClien
      */
     public function add($arr)
     {
-        $array = [];
         $indexes = ['nom', 'description', 'prix', 'quantite', 'categorie'];
-        foreach($indexes as $key => $value) {
-            if(!array_key_exists($value, $arr))
-                throw new Zend_Exception('L\'index "'.$value.'" n\'existe pas dans le tableau.');
-            if($key == 3)
-                array_push($array, '');
-            array_push($array, $arr[$value]);
-        }
-        $response = $this->__call('addNewProduit', $array);
+        $response = $this->__call('addNewProduit', $this->checkArray($indexes, $arr));
         return $response;
     }
     
@@ -74,8 +66,9 @@ class Application_Model_ProduitService extends Application_Model_CustomSoapClien
      */
     public function update($id, $obj)
     {
-        $array = [$id, $obj['nom'], $obj['description'], $obj['prix'], '', $obj['quantite'], $obj['categorie']];
-        return $this->__call('updateProduit', $array);
+        $indexes = ['nom', 'description', 'prix', 'quantite', 'categorie'];
+        $response = $this->__call('updateProduit', $this->checkArray($indexes, $obj, $id));
+        return $response;
     }
     
     /**
@@ -88,5 +81,33 @@ class Application_Model_ProduitService extends Application_Model_CustomSoapClien
     {
         $response = $this->__call('deleteProduit', array($id));   
         return $response;
+    }
+
+    /**
+     * Vérifier si les indexes existe dans le tableau
+     *
+     * @param  array $indexes
+     * @param  array $arr
+     * @param  int|null $id
+     * @return array
+     * @throws Application_Model_ExceptionMessage
+     */
+    public function checkArray($indexes, $arr, $id = null)
+    {
+        $tab = [];
+        if(isset($id))
+            array_push($tab, $id);
+        foreach($indexes as $key => $value)
+        {
+            if(isset($arr[$value]))
+            {
+                if($key == 3)
+                    array_push($tab, ''); 
+                array_push($tab, $arr[$value]);
+            }
+            else
+                throw new Application_Model_ExceptionMessage("L'index '".$value."' n'existe pas dans le tableau", "T-400");
+        }
+        return $tab;
     }
 }

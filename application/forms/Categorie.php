@@ -16,7 +16,8 @@ class Application_Form_Categorie extends Zend_Form
         $nom->setAttrib('placeholder', 'nom de la catégorie');
         $nom->setAttrib('name', 'nom');
         $nom->setAttrib('class', 'form-control');
-
+        $nom->setAttrib('required', 'true');
+        
         $id = new Zend_Form_Element_Hidden('idCat');
         $id->setAttrib('id', 'categorie_nom');
         $id->setAttrib('name', 'id');

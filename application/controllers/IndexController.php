@@ -96,7 +96,6 @@ class IndexController extends Zend_Controller_Action
                     $response = $this->commerceApiProduit->addModel($_POST);
                     if($response->code != '201')
                         throw new Application_Model_ExceptionMessage($response->msg, $response->code);
-                    
 
                     $this->_flashMessenger->addMessage('Le produit a été ajouté', 'success');
                     header("HTTP/1.1 201 OK");

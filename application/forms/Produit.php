@@ -27,7 +27,7 @@ class Application_Form_Produit extends Zend_Form
             ->setAttrib('name', 'description')
             ->setAttrib('class', 'form-control')
             ->setAttrib('required', 'true');
-            
+
         $prix = new Zend_Form_Element_Text('PrixProduit');
         $prix->setLabel('le prix')
             ->setAttrib('id', 'inputPrix')
@@ -54,7 +54,6 @@ class Application_Form_Produit extends Zend_Form
 
         $submit = new Zend_Form_Element_Submit('Ajouter');
         $submit->setAttrib('id', 'ajouter');
-        $submit->setAttrib('value', 'hhh');
         $submit->setAttrib('class', 'btn btn-primary');
 
         $this->addElements(array($nom, $desc, $prix, $quantite, $cat, $submit));

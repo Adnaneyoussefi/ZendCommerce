@@ -74,8 +74,10 @@ class IndexController extends Zend_Controller_Action
 
                 if ($this->_request->getPost('Modifier')) {
                     $response = $this->commerceApiProduit->updateModelById($this->_request->getQuery('id'), $_POST);
-                    if($response->code != '204')
+                    if ($response->code != '204') {
                         throw new Application_Model_ExceptionMessage($response->msg, $response->code);
+                    }
+
                     $this->_flashMessenger->addMessage('Le produit a été modifié', 'success');
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
                 }
@@ -94,16 +96,20 @@ class IndexController extends Zend_Controller_Action
                 $this->view->form = $form->render();
                 if ($this->_request->getPost('Ajouter')) {
                     $response = $this->commerceApiProduit->addModel($_POST);
-                    if($response->code != '203')
+                    if ($response->code != '203') {
                         throw new Application_Model_ExceptionMessage($response->msg, $response->code);
+                    }
+
                     $this->_flashMessenger->addMessage('Le produit a été ajouté', 'success');
                     header("HTTP/1.1 201 OK");
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
                 }
             }
         } catch (Application_Model_ExceptionMessage $e) {
-            if($e->getCodeM() == ('T-501') || $e->getCodeM() == ('T-502') || $e->getCodeM() == ('T-500'))
+            if ($e->getCodeM() == ('T-501') || $e->getCodeM() == ('T-502') || $e->getCodeM() == ('T-500')) {
                 $e->setMessage('Veuillez revenez plus tard');
+            }
+
             $this->_flashMessenger->addMessage($e->getMessage(), 'error');
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         }

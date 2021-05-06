@@ -40,7 +40,7 @@ class IndexController extends Zend_Controller_Action
         try {
             $this->view->produits = $this->commerceApiProduit->getModels();
             $this->view->message = $this->_flashMessenger->getMessages();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->_flashMessenger->addMessage($e->getMessage(), 'error');
         }
     }
@@ -74,7 +74,7 @@ class IndexController extends Zend_Controller_Action
 
                 if ($this->_request->getPost('Modifier')) {
                     $response = $this->commerceApiProduit->updateModelById($this->_request->getQuery('id'), $_POST);
-                    if($response->code != '204')
+                    if($response->code != '200')
                         throw new Application_Model_ExceptionMessage($response->msg, $response->code);
                     $this->_flashMessenger->addMessage('Le produit a été modifié', 'success');
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
@@ -94,7 +94,7 @@ class IndexController extends Zend_Controller_Action
                 $this->view->form = $form->render();
                 if ($this->_request->getPost('Ajouter')) {
                     $response = $this->commerceApiProduit->addModel($_POST);
-                    if($response->code != '203')
+                    if($response->code != '201')
                         throw new Application_Model_ExceptionMessage($response->msg, $response->code);
                     $this->_flashMessenger->addMessage('Le produit a été ajouté', 'success');
                     header("HTTP/1.1 201 OK");
@@ -104,6 +104,11 @@ class IndexController extends Zend_Controller_Action
         } catch (Application_Model_ExceptionMessage $e) {
             if($e->getCodeM() == ('T-501') || $e->getCodeM() == ('T-502') || $e->getCodeM() == ('T-500'))
                 $e->setMessage('Veuillez revenez plus tard');
+            $this->_flashMessenger->addMessage($e->getMessage(), 'error');
+            $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+        }
+        catch(Exception $e)
+        {
             $this->_flashMessenger->addMessage($e->getMessage(), 'error');
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         }
@@ -119,17 +124,25 @@ class IndexController extends Zend_Controller_Action
         try {
             if ($this->_request->getQuery('id')) {
                 $response = $this->commerceApiProduit->deleteModelById($this->_request->getQuery('id'));
-                if ($response->code != '205') {
+                if ($response->code != '204') {
                     throw new Application_Model_ExceptionMessage($response->msg, $response->code);
                 }
                 $this->_flashMessenger->setNamespace('success')->addMessage('Le produit a été supprimé', 'success');
                 $this->r->gotoUrl('index/get-produits')->redirectAndExit();
             }
         } catch (Application_Model_ExceptionMessage $e) {
-            $this->_flashMessenger->setNamespace('error')->addMessage($e->getMessage(), 'error');
+            if($e->getCodeM() == ('T-501') || $e->getCodeM() == ('T-502') || $e->getCodeM() == ('T-500'))
+                $e->setMessage('Veuillez revenez plus tard');
+            $this->_flashMessenger->addMessage($e->getMessage(), 'error');
+            $this->r->gotoUrl('index/get-produits')->redirectAndExit();
+        }
+        catch(Exception $e)
+        {
+            $this->_flashMessenger->addMessage($e->getMessage(), 'error');
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         }
     }
+
     /**
      * categorieAction
      *
@@ -138,37 +151,47 @@ class IndexController extends Zend_Controller_Action
     public function categorieAction()
     {
         try {
+            //Suppression
             if ($this->_request->getQuery('idS')) {
                 $response = $this->commerceApiCategorie->deleteModelById($this->_request->getQuery('idS'));
-                if ($response->code != '202') {
+                if ($response->code != '204') {
                     throw new Application_Model_ExceptionMessage($response->msg, $response->code);
                 }
-
                 $this->view->delete = 'Catégorie supprimé avec succés';
             }
-            //modification et l'ajout
+
+            //Ajout
             else if ($this->_request->getPost('nom') && empty($this->_request->getPost('id'))) {
                 $response = $this->commerceApiCategorie->addModel($_POST);
-                if ($response->code != '200') {
-                    throw new Application_Model_ExceptionMessage($response->msg, $response->code);
-                }
-
-                $this->view->add = 'Categorie a été ajouté';
-            } else if ($this->_request->getPost('nom') && $this->_request->getPost('id')) {
-                $response = $this->commerceApiCategorie->updateModelById($_POST['id'], $_POST);
                 if ($response->code != '201') {
                     throw new Application_Model_ExceptionMessage($response->msg, $response->code);
                 }
+                $this->view->add = 'Categorie a été ajouté';
 
+            //Modification
+            } else if ($this->_request->getPost('nom') && $this->_request->getPost('id')) {
+                $response = $this->commerceApiCategorie->updateModelById($_POST['id'], $_POST);
+                if ($response->code != '200') {
+                    throw new Application_Model_ExceptionMessage($response->msg, $response->code);
+                }
                 $this->view->update = 'Categorie a été modifié';
             }
-            //affichage listes des catégories
+
+            //Affichage listes des catégories
             $this->view->info = $this->commerceApiCategorie->getModels();
             $this->view->infoProd = $this->commerceApiProduit->getModels();
         } catch (Application_Model_ExceptionMessage $e) {
+            if($e->getCodeM() == ('T-501') || $e->getCodeM() == ('T-502') || $e->getCodeM() == ('T-500'))
+                $e->setMessage('Veuillez revenez plus tard');
+            $this->view->error = $e->getMessage();
+        } 
+        catch(Exception $e)
+        {
+            var_dump($e);
             $this->view->error = $e->getMessage();
         }
     }
+
     /**
      * modifierAction
      *

@@ -7,34 +7,30 @@ class Application_Model_CustomSoapClient extends Zend_Soap_Client
     /**
      * __call
      *
-     * @param  mixed $function_name
-     * @param  mixed $arguments
-     * @return void
+     * @param  string $function_name
+     * @param  array $arguments
+     * @return object
      */
     public function __call($function_name, $arguments)
     {
-        try {
-            $result = [];
-            $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
-            $bouchon = $config->getOption('bouchon');
-            if ($bouchon['enabled'] == true) {
-                $xml_path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
-                .DIRECTORY_SEPARATOR.$bouchon['directory']
-                .DIRECTORY_SEPARATOR.$bouchon['active_uc']
-                .DIRECTORY_SEPARATOR.$this->ws_name.'.xml';
+        $result = [];
+        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $bouchon = $config->getOption('bouchon');
+        if ($bouchon['enabled'] == true) {
+            $xml_path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'
+            .DIRECTORY_SEPARATOR.$bouchon['directory']
+            .DIRECTORY_SEPARATOR.$bouchon['active_uc']
+            .DIRECTORY_SEPARATOR.$this->ws_name.'.xml';
 
-                if(file_exists($xml_path))
-                    $result = $this->convertResponseXML($xml_path);
-                else
-                    throw new Exception("Le fichier ".$xml_path." n'existe pas");
+            if(file_exists($xml_path))
+                $result = $this->convertResponseXML($xml_path);
+            else
+                throw new Exception("Le fichier ".$xml_path." n'existe pas");
 
-            } else {
-                $result = parent::__call($function_name, $arguments);
-            }
-            return $result;
-        } catch(\Exception $e) {
-            var_dump($e->getMessage());
+        } else {
+            $result = parent::__call($function_name, $arguments);
         }
+        return $result;
     }
     
     /**

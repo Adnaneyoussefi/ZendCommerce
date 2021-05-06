@@ -96,14 +96,18 @@ class IndexController extends Zend_Controller_Action
                     $response = $this->commerceApiProduit->addModel($_POST);
                     if($response->code != '201')
                         throw new Application_Model_ExceptionMessage($response->msg, $response->code);
+                    
+
                     $this->_flashMessenger->addMessage('Le produit a été ajouté', 'success');
                     header("HTTP/1.1 201 OK");
                     $this->r->gotoUrl('index/get-produits')->redirectAndExit();
                 }
             }
         } catch (Application_Model_ExceptionMessage $e) {
-            if($e->getCodeM() == ('T-501') || $e->getCodeM() == ('T-502') || $e->getCodeM() == ('T-500'))
+            if ($e->getCodeM() == ('T-501') || $e->getCodeM() == ('T-502') || $e->getCodeM() == ('T-500')) {
                 $e->setMessage('Veuillez revenez plus tard');
+            }
+
             $this->_flashMessenger->addMessage($e->getMessage(), 'error');
             $this->r->gotoUrl('index/get-produits')->redirectAndExit();
         }
